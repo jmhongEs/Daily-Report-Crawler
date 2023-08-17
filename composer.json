@@ -1,0 +1,22 @@
+{
+    "name": "jmhong/daily-report-crawler",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Jmhong\\DailyReportCrawler\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jmhong",
+            "email": "jmhong.es@esgroup.net"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "guzzlehttp/guzzle": "^7.7",
+        "symfony/var-dumper": "^5.4",
+        "symfony/dom-crawler": "^6.3",
+        "symfony/css-selector": "^6.3"
+    }
+}
