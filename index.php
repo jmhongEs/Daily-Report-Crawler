@@ -19,7 +19,7 @@ $mailBody = $mailMaker->mailMake($resultArray);
 echo $mailBody;
 
 // HTML 문서를 Mail Body에 실어서 보내기
-// $mailer->sendEmail($_ENV['REPORT_RECIPIENT_EMAIL'],$mailBody);
+$mailer->sendEmail($_ENV['REPORT_RECIPIENT_EMAIL'],$mailBody);
 
 
 ?>

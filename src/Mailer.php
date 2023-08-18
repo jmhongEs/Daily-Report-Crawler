@@ -40,7 +40,7 @@ class Mailer extends PHPMailer
             //Attachments
             // $this->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
             $this->addAddress($toEmail, 'Joe User');     //Add a recipient
-            $this->addAttachment('assets/dailyReport/daily-report.html', 'daily-report.html');    //Optional name
+            // $this->addAttachment('assets/dailyReport/daily-report.html', 'daily-report.html');    //Optional name
 
             //Content
             $this->isHTML(true);                                  //Set email format to HTML

@@ -2,6 +2,8 @@
 
 namespace App\DailyReportCrawler;
 
+use DateTime;
+
 class MailMaker{
 
     // todo : D-1, D-5, D-20 데이터는 DB에서 가져와서 매개변수로 추가로 받아야함
@@ -15,7 +17,8 @@ class MailMaker{
 
         // 하루 전날
         // todo : DateTime 클래스 왜 작동 안하는지 알아보기
-        //$today = new DateTime();
+        $today = new DateTime();
+        print_r($today);
         //$yesterday = $today->modify('-1 day');
 
         // 인라인 스타일 코드 간소화
@@ -281,7 +284,7 @@ class MailMaker{
     
     // 증감값에 절댓값 처리 + 포맷팅
     function valueFormat($value) {
-        return number_format(abs($value), 2);
+        return $value;
     }
     
 }
