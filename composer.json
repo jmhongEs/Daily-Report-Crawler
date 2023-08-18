@@ -3,7 +3,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Jmhong\\DailyReportCrawler\\": "src/"
+            "App\\DailyReportCrawler\\": "src/"
         }
     },
     "authors": [
@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.7",
         "symfony/var-dumper": "^5.4",
         "symfony/dom-crawler": "^6.3",
-        "symfony/css-selector": "^6.3"
+        "symfony/css-selector": "^6.3",
+        "vlucas/phpdotenv": "^5.5"
     }
 }

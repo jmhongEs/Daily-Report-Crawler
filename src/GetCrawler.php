@@ -1,5 +1,9 @@
 <?php
 
+namespace App\DailyReportCrawler;
+
+use DOMDocument;
+use DOMXPath;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 
 class GetCrawler {
