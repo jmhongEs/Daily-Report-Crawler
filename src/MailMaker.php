@@ -18,8 +18,7 @@ class MailMaker{
         // 하루 전날
         // todo : DateTime 클래스 왜 작동 안하는지 알아보기
         $today = new DateTime();
-        print_r($today);
-        //$yesterday = $today->modify('-1 day');
+        $yesterday = $today->modify('-1 day');
 
         // 인라인 스타일 코드 간소화
         $table_td = "text-align: center; font-size: 14px; padding: 7px 0;";
@@ -49,7 +48,7 @@ class MailMaker{
             <div style=\"display: flex; justify-content: space-between;\">
                 <h4 style=\"{$fonts} margin-bottom: 4px;\">[주요지수 변동현황]</h4>
                 <h5 style=\"{$fonts} margin-bottom: 4px;\">
-                    (08월 17일 종가 기준)
+                    {$yesterday->format('(m월 d일 종가 기준)')}
                 </h5>
             </div>
 
@@ -155,7 +154,7 @@ class MailMaker{
                     <tr>
                         <th rowspan=\"5\" style=\"{$fonts} font-size: 14px;\">주요금리</th>
                         <td style=\"{$fonts} {$table_td}\">국고채 3년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[12]) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[12]) . "%</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
@@ -163,15 +162,15 @@ class MailMaker{
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">국고채 10년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[13]) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[13]) . "%</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(-5) . "\"> " . $this->changeSymbolByUpDown(-5) . "&nbsp" . $this->valueFormat(-5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">한국 CD 91일</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[14]) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[14]) . "%</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
@@ -179,7 +178,7 @@ class MailMaker{
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">미국채 2년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[15]) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[15]) . "%</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
@@ -187,7 +186,7 @@ class MailMaker{
                     </tr>
                     <tr style=\"border-bottom: 1px solid #aaa;\">
                         <td style=\"{$fonts} {$table_td}\">미국채 10년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[16]) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[16]) . "%</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
