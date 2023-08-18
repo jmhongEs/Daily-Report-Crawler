@@ -28,7 +28,7 @@ class Mailer extends PHPMailer
         $this->setFrom('jmhong.es@gmail.com', 'Mailer');
     }
 
-    public function sendEmail(string $toEmail , string $htmlString)
+    public function sendEmail(string $toEmail , string $mailBody)
     {
         //Create an instance; passing `true` enables exceptions
         try {
@@ -45,7 +45,7 @@ class Mailer extends PHPMailer
             //Content
             $this->isHTML(true);                                  //Set email format to HTML
             $this->Subject = 'Here is the subject';
-            $this->Body    = "'.$htmlString.'";
+            $this->Body    = "'.$mailBody.'";
             $this->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             $this->send();
