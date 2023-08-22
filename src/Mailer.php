@@ -28,7 +28,7 @@ class Mailer extends PHPMailer
         $this->setFrom('jmhong.es@gmail.com', 'Mailer');
     }
 
-    public function sendEmail(string $toEmail , string $mailBody)
+    public function sendEmail(string $subject, string $toEmail , string $mailBody)
     {
         //Create an instance; passing `true` enables exceptions
         try {
@@ -39,8 +39,40 @@ class Mailer extends PHPMailer
 
             //Attachments
             // $this->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-            $this->addAddress($toEmail, 'Joe User');     //Add a recipient
+            $this->addAddress($toEmail);     //Add a recipient
             // $this->addAttachment('assets/dailyReport/daily-report.html', 'daily-report.html');    //Optional name
+
+            //Content
+            $this->isHTML(true);                                  //Set email format to HTML
+            $this->Subject = "'.$subject.'";
+            $this->Body    = "'.$mailBody.'";
+            $this->AltBody = '';
+
+            $this->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$this->ErrorInfo}";
+        } finally {
+            $this->clearAddresses();
+            $this->clearAttachments();
+        }
+    }
+
+    public function sendEmails(array $emails, $mailBody)
+    {
+        try {
+            // $this->addAddress('ellen@example.com');               //Name is optional
+            // $this->addReplyTo('info@example.com', 'Information');
+            // $this->addCC('cc@example.com');
+            // $this->addBCC('bcc@example.com');
+
+            //Attachments
+            // $this->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            foreach ($emails as $toEmail) {
+                $this->addAddress($toEmail);     //Add a recipient
+            }
+            
+            $this->addAttachment('assets/dailyReport/daily-report.html', 'daily-report.html');    //Optional name
 
             //Content
             $this->isHTML(true);                                  //Set email format to HTML
@@ -52,6 +84,9 @@ class Mailer extends PHPMailer
             echo 'Message has been sent';
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$this->ErrorInfo}";
+        } finally {
+            $this->clearAddresses();
+            $this->clearAttachments();
         }
     }
 }

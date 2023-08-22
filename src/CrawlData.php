@@ -150,6 +150,13 @@ class CrawlData
         //$this->crawler->showResult("니켈", $niValue);
         $resultArray[] = $niValue[0]->textContent;
 
-        return $resultArray;
+        $floatResultArray= [];
+        foreach($resultArray as $result){
+            $cleanResult = str_replace(',','',$result);
+            $floatResult = floatval($cleanResult);
+            $floatResultArray[] = $floatResult;
+        }
+
+        return $floatResultArray;
     }
 }

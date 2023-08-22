@@ -87,7 +87,7 @@ class MailMaker{
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">DOW JONES</td>
                         <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[4]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(-50) . "&nbsp" . $this->valueFormat(1) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
                         <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
@@ -283,7 +283,7 @@ class MailMaker{
     
     // 증감값에 절댓값 처리 + 포맷팅
     function valueFormat($value) {
-        return $value;
+        return number_format(abs($value), 2);
     }
     
 }
