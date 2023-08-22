@@ -7,16 +7,11 @@ use DateTime;
 class MailMaker{
 
     // todo : D-1, D-5, D-20 데이터는 DB에서 가져와서 매개변수로 추가로 받아야함
-    /**
-     * 
-     * @param $currentArray : CrawlData 클래스 이용해서 현재 데이터 가져오기 
-     */
-    function mailMake($currentArray) {
+    function mailMake($dataArr1, $dataArr2, $dataArr3, $dataArr4) {
 
+        // 문서에 필요한 날짜 변수
         $todayFormat = Date('Y-m-d');
-
         // 하루 전날
-        // todo : DateTime 클래스 왜 작동 안하는지 알아보기
         $today = new DateTime();
         $yesterday = $today->modify('-1 day');
 
@@ -68,186 +63,186 @@ class MailMaker{
                     <tr>
                         <th rowspan=\"5\" style=\"{$fonts} font-size: 14px;\">주가지수</th>
                         <td style=\"{$fonts} {$table_td}\">KOSPI</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[2]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(111) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[0]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[0]->stockPrice - $dataArr2[0]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[0]->stockPrice - $dataArr2[0]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[0]->stockPrice - $dataArr2[0]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[0]->stockPrice - $dataArr3[0]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[0]->stockPrice - $dataArr3[0]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[0]->stockPrice - $dataArr3[0]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[0]->stockPrice - $dataArr4[0]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[0]->stockPrice - $dataArr4[0]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[0]->stockPrice - $dataArr4[0]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
 
 
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">KOSDAQ</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[3]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[1]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[1]->stockPrice - $dataArr2[1]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[1]->stockPrice - $dataArr2[1]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[1]->stockPrice - $dataArr2[1]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[1]->stockPrice - $dataArr3[1]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[1]->stockPrice - $dataArr3[1]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[1]->stockPrice - $dataArr3[1]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[1]->stockPrice - $dataArr4[1]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[1]->stockPrice - $dataArr4[1]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[1]->stockPrice - $dataArr4[1]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">DOW JONES</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[4]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(-50) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[2]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[2]->stockPrice - $dataArr2[2]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[2]->stockPrice - $dataArr2[2]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[2]->stockPrice - $dataArr2[2]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[2]->stockPrice - $dataArr3[2]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[2]->stockPrice - $dataArr3[2]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[2]->stockPrice - $dataArr3[2]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[2]->stockPrice - $dataArr4[2]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[2]->stockPrice - $dataArr4[2]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[2]->stockPrice - $dataArr4[2]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">나스닥</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[5]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[3]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[3]->stockPrice - $dataArr2[3]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[3]->stockPrice - $dataArr2[3]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[3]->stockPrice - $dataArr2[3]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[3]->stockPrice - $dataArr3[3]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[3]->stockPrice - $dataArr3[3]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[3]->stockPrice - $dataArr3[3]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[3]->stockPrice - $dataArr4[3]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[3]->stockPrice - $dataArr4[3]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[3]->stockPrice - $dataArr4[3]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr style=\"border-bottom: 1px solid #aaa;\">
                         <td style=\"{$fonts} {$table_td}\">상해종합</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[6]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[4]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[4]->stockPrice - $dataArr2[4]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[4]->stockPrice - $dataArr2[4]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[4]->stockPrice - $dataArr2[4]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[4]->stockPrice - $dataArr3[4]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[4]->stockPrice - $dataArr3[4]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[4]->stockPrice - $dataArr3[4]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[4]->stockPrice - $dataArr4[4]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[4]->stockPrice - $dataArr4[4]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[4]->stockPrice - $dataArr4[4]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
 
                     <tr>
                         <th rowspan=\"5\" style=\"{$fonts} font-size: 14px;\">주요주가</th>
                         <td style=\"{$fonts} {$table_td}\">메쎄이상</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[7]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[5]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[5]->stockPrice - $dataArr2[5]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[5]->stockPrice - $dataArr2[5]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[5]->stockPrice - $dataArr2[5]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[5]->stockPrice - $dataArr3[5]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[5]->stockPrice - $dataArr3[5]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[5]->stockPrice - $dataArr3[5]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[5]->stockPrice - $dataArr4[5]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[5]->stockPrice - $dataArr4[5]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[5]->stockPrice - $dataArr4[5]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">KOSDAQ</td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">이상네트웍스</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[8]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[6]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[6]->stockPrice - $dataArr2[6]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[6]->stockPrice - $dataArr2[6]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[6]->stockPrice - $dataArr2[6]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[6]->stockPrice - $dataArr3[6]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[6]->stockPrice - $dataArr3[6]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[6]->stockPrice - $dataArr3[6]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[6]->stockPrice - $dataArr4[6]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[6]->stockPrice - $dataArr4[6]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[6]->stockPrice - $dataArr4[6]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">KOSDAQ</td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">황금에스티</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[9]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[7]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[7]->stockPrice - $dataArr2[7]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[7]->stockPrice - $dataArr2[7]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[7]->stockPrice - $dataArr2[7]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[7]->stockPrice - $dataArr3[7]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[7]->stockPrice - $dataArr3[7]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[7]->stockPrice - $dataArr3[7]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[7]->stockPrice - $dataArr4[7]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[7]->stockPrice - $dataArr4[7]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[7]->stockPrice - $dataArr4[7]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">KOSPI</td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">유에스티</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[10]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[8]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[8]->stockPrice - $dataArr2[8]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[8]->stockPrice - $dataArr2[8]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[8]->stockPrice - $dataArr2[8]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[8]->stockPrice - $dataArr3[8]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[8]->stockPrice - $dataArr3[8]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[8]->stockPrice - $dataArr3[8]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[8]->stockPrice - $dataArr4[8]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[8]->stockPrice - $dataArr4[8]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[8]->stockPrice - $dataArr4[8]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">KOSDAQ</td>
                     </tr>
                     <tr style=\"border-bottom: 1px solid #aaa;\">
                         <td style=\"{$fonts} {$table_td}\">길교이앤씨</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[11]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[9]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[9]->stockPrice - $dataArr2[9]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[9]->stockPrice - $dataArr2[9]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[9]->stockPrice - $dataArr2[9]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[9]->stockPrice - $dataArr3[9]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[9]->stockPrice - $dataArr3[9]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[9]->stockPrice - $dataArr3[9]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[9]->stockPrice - $dataArr4[9]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[9]->stockPrice - $dataArr4[9]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[9]->stockPrice - $dataArr4[9]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">KONEX</td>
                     </tr>
 
                     <tr>
                         <th rowspan=\"5\" style=\"{$fonts} font-size: 14px;\">주요금리</th>
                         <td style=\"{$fonts} {$table_td}\">국고채 3년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[12]) . "%</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[10]->stockPrice) . "%</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[10]->stockPrice - $dataArr2[10]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[10]->stockPrice - $dataArr2[10]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[10]->stockPrice - $dataArr2[10]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[10]->stockPrice - $dataArr3[10]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[10]->stockPrice - $dataArr3[10]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[10]->stockPrice - $dataArr3[10]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[10]->stockPrice - $dataArr4[10]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[10]->stockPrice - $dataArr4[10]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[10]->stockPrice - $dataArr4[10]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">국고채 10년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[13]) . "%</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(-5) . "\"> " . $this->changeSymbolByUpDown(-5) . "&nbsp" . $this->valueFormat(-5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[11]->stockPrice) . "%</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[11]->stockPrice - $dataArr2[11]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[11]->stockPrice - $dataArr2[11]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[11]->stockPrice - $dataArr2[11]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[11]->stockPrice - $dataArr3[11]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[11]->stockPrice - $dataArr3[11]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[11]->stockPrice - $dataArr3[11]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[11]->stockPrice - $dataArr4[11]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[11]->stockPrice - $dataArr4[11]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[11]->stockPrice - $dataArr4[11]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">한국 CD 91일</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[14]) . "%</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[12]->stockPrice) . "%</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[12]->stockPrice - $dataArr2[12]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[12]->stockPrice - $dataArr2[12]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[12]->stockPrice - $dataArr2[12]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[12]->stockPrice - $dataArr3[12]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[12]->stockPrice - $dataArr3[12]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[12]->stockPrice - $dataArr3[12]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[12]->stockPrice - $dataArr4[12]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[12]->stockPrice - $dataArr4[12]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[12]->stockPrice - $dataArr4[12]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">미국채 2년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[15]) . "%</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[13]->stockPrice) . "%</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[13]->stockPrice - $dataArr2[13]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[13]->stockPrice - $dataArr2[13]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[13]->stockPrice - $dataArr2[13]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[13]->stockPrice - $dataArr3[13]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[13]->stockPrice - $dataArr3[13]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[13]->stockPrice - $dataArr3[13]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[13]->stockPrice - $dataArr4[13]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[13]->stockPrice - $dataArr4[13]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[13]->stockPrice - $dataArr4[13]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr style=\"border-bottom: 1px solid #aaa;\">
                         <td style=\"{$fonts} {$table_td}\">미국채 10년</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[16]) . "%</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[14]->stockPrice) . "%</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[14]->stockPrice - $dataArr2[14]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[14]->stockPrice - $dataArr2[14]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[14]->stockPrice - $dataArr2[14]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[14]->stockPrice - $dataArr3[14]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[14]->stockPrice - $dataArr3[14]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[14]->stockPrice - $dataArr3[14]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[14]->stockPrice - $dataArr4[14]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[14]->stockPrice - $dataArr4[14]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[14]->stockPrice - $dataArr4[14]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <th rowspan=\"4\" style=\"{$fonts} font-size: 14px;\">환율</th>
                         <td style=\"{$fonts} {$table_td}\">달러/원 USDKRW</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[17]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[15]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[15]->stockPrice - $dataArr2[15]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[15]->stockPrice - $dataArr2[15]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[15]->stockPrice - $dataArr2[15]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[15]->stockPrice - $dataArr3[15]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[15]->stockPrice - $dataArr3[15]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[15]->stockPrice - $dataArr3[15]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[15]->stockPrice - $dataArr4[15]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[15]->stockPrice - $dataArr4[15]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[15]->stockPrice - $dataArr4[15]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">고시환율</td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">유로/달러 EURUSD</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[18]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[16]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[16]->stockPrice - $dataArr2[16]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[16]->stockPrice - $dataArr2[16]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[16]->stockPrice - $dataArr2[16]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[16]->stockPrice - $dataArr3[16]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[16]->stockPrice - $dataArr3[16]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[16]->stockPrice - $dataArr3[16]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[16]->stockPrice - $dataArr4[16]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[16]->stockPrice - $dataArr4[16]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[16]->stockPrice - $dataArr4[16]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">달러/위안 USDCNY</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[19]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[17]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[17]->stockPrice - $dataArr2[17]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[17]->stockPrice - $dataArr2[17]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[17]->stockPrice - $dataArr2[17]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[17]->stockPrice - $dataArr3[17]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[17]->stockPrice - $dataArr3[17]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[17]->stockPrice - $dataArr3[17]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[17]->stockPrice - $dataArr4[17]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[17]->stockPrice - $dataArr4[17]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[17]->stockPrice - $dataArr4[17]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\"></td>
                     </tr>
                     <tr style=\"border-bottom: 1px solid #aaa;\">
                         <td style=\"{$fonts} {$table_td}\">100엔/원 JPYKRW</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[20]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[18]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[18]->stockPrice - $dataArr2[18]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[18]->stockPrice - $dataArr2[18]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[18]->stockPrice - $dataArr2[18]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[18]->stockPrice - $dataArr3[18]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[18]->stockPrice - $dataArr3[18]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[18]->stockPrice - $dataArr3[18]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[18]->stockPrice - $dataArr4[18]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[18]->stockPrice - $dataArr4[18]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[18]->stockPrice - $dataArr4[18]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">100¥ 기준</td>
                     </tr>
                     <tr>
                         <th rowspan=\"3\" style=\"font-size: 14px;\">주요원자재</th>
                         <td style=\"{$fonts} {$table_td}\">국제유가 (WTI)</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[21]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[19]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[19]->stockPrice - $dataArr2[19]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[19]->stockPrice - $dataArr2[19]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[19]->stockPrice - $dataArr2[19]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[19]->stockPrice - $dataArr3[19]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[19]->stockPrice - $dataArr3[19]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[19]->stockPrice - $dataArr3[19]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[19]->stockPrice - $dataArr4[19]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[19]->stockPrice - $dataArr4[19]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[19]->stockPrice - $dataArr4[19]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">단위 : 배럴</td>
                     </tr>
                     <tr>
                         <td style=\"{$fonts} {$table_td}\">금</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[22]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[20]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[20]->stockPrice - $dataArr2[20]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[20]->stockPrice - $dataArr2[20]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[20]->stockPrice - $dataArr2[20]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[20]->stockPrice - $dataArr3[20]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[20]->stockPrice - $dataArr3[20]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[20]->stockPrice - $dataArr3[20]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[20]->stockPrice - $dataArr4[20]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[20]->stockPrice - $dataArr4[20]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[20]->stockPrice - $dataArr4[20]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">단위 : 트로이온스</td>
                     </tr>
                     <tr style=\"{$fonts} border-bottom: 2px solid #555;\">
                         <td style=\"{$fonts} {$table_td}\">니켈</td>
-                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($currentArray[23]) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(1) . "\"> " . $this->changeSymbolByUpDown(1) . "&nbsp" . $this->valueFormat(1) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(5) . "\"> " . $this->changeSymbolByUpDown(5) . "&nbsp" . $this->valueFormat(5) . "</td>
-                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown(20) . "\"> " . $this->changeSymbolByUpDown(20) . "&nbsp" . $this->valueFormat(20) . "</td>
+                        <td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dataArr1[21]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[21]->stockPrice - $dataArr2[21]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[21]->stockPrice - $dataArr2[21]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[21]->stockPrice - $dataArr2[21]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[21]->stockPrice - $dataArr3[21]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[21]->stockPrice - $dataArr3[21]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[21]->stockPrice - $dataArr3[21]->stockPrice) . "</td>
+                        <td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dataArr1[21]->stockPrice - $dataArr4[21]->stockPrice) . "\"> " . $this->changeSymbolByUpDown($dataArr1[21]->stockPrice - $dataArr4[21]->stockPrice) . "&nbsp" . $this->valueFormat($dataArr1[21]->stockPrice - $dataArr4[21]->stockPrice) . "</td>
                         <td style=\"{$fonts} {$table_td}\">단위 : TON</td>
                     </tr>
                 </tbody>

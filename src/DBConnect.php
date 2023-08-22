@@ -3,6 +3,7 @@
 namespace App\DailyReportCrawler;
 
 use mysqli;
+use App\DailyReportCrawler\StockPrice;
 
 Class DBConnect{
     
@@ -49,10 +50,37 @@ Class DBConnect{
             $this->conn->query($sql);
         }
         
-
-        $this->conn->close();
-
     }
+    
+    /**
+     * @author 서영
+     * @param $targetStockDate 종가 기준일
+     * @return stockPrice 데이터 배열
+     */
+    public function selectStockPriceByStockDate($targetStockDate) {
+        $query = "SELECT * FROM stock_price WHERE stock_date = ?";
+        $statement = $this->conn->prepare($query);
+
+        $statement->bind_param('i', $targetStockDate);
+        $statement->execute();
+        $dataArr = $statement->get_result();
+
+        $resultArr = [];
+        foreach ($dataArr as $data) {
+            $stockPrice = new StockPrice($data['STOCK_PRICE_ID'], $data['STOCK_DATE'], 
+                                        $data['CREATED_DATE'], $data['STOCK_ID'], $data['STOCK_PRICE']);
+            $resultArr[] = $stockPrice;
+        }
+
+        return $resultArr;
+    }
+    
+
+    public function closeConnection() {
+        $this->conn->close();
+    }
+
+
 }
 
 ?>
