@@ -1,5 +1,7 @@
 <?php
 
+namespace App\DailyReportCrawler;
+
 use GuzzleHttp\Client;
 
 class PostCrawler
