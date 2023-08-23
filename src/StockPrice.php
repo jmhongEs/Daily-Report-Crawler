@@ -9,12 +9,11 @@ class StockPrice {
     public int $stockId;
     public float $stockPrice;
 
-    public function __construct($stockPriceId, $stockDate, $createdDate, $stockId, $stockPrice) {
-        $this->stockPriceId = $stockPriceId;
+    public function __construct($stockDate, $stockId, $stockPrice) {
         $this->stockDate = $stockDate;
-        $this->createdDate = $createdDate;
         $this->stockId = $stockId;
         $this->stockPrice = $stockPrice;
     }
+
 
 }
