@@ -13,31 +13,17 @@ $mailMaker = new MailMaker();
 $dbConnect = new DBConnect();
 
 // 데이터 모으기
-$floatResultArray= $crawlData->crawldata();
+// $floatResultArray= $crawlData->crawldata();
 
 // DB에 삽입
-$dbConnect->dataInsert($floatResultArray);
-
-// 데이터 SELECT
-// 오늘 기준으로 -1(기준종가), -2(D-1종가), -6(D-5종가), -21(D-20종가) 필요
-
-// 날짜를 계산해서 int형으로 바꿔서 반환해주는 함수
-function dateFormat($minusDay) {
-    $today = new DateTime();
-    $targetdate = $today->modify("-{$minusDay} day");
-    return intval($targetdate->format('Ymd'));
-}
-
-
-$dataArr1 = $dbConnect->selectStockPriceByStockDate(dateFormat(1));
-$dataArr2 = $dbConnect->selectStockPriceByStockDate(dateFormat(2)); 
-$dataArr3 = $dbConnect->selectStockPriceByStockDate(dateFormat(6)); 
-$dataArr4 = $dbConnect->selectStockPriceByStockDate(dateFormat(21));
+// $dbConnect->dataInsert($floatResultArray);
 
 // 데이터 HTML 문서에 삽입 
-$mailBody = $mailMaker->mailMake($dataArr1, $dataArr2, $dataArr3, $dataArr4);
+$mailBody = $mailMaker->mailMake();
 echo $mailBody;
 
+// 쿼리 실행 후 마지막에 실행 (커넥션 종료)
+$dbConnect->closeConnection();
 
 
 // $emails = $_ENV['REPORT_RECIPIENT_EMAIL'];
