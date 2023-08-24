@@ -7,24 +7,17 @@ use DateTime;
 
 class MailMaker {
 
-    function test() {
-
-
-    }
-
-
     // 오늘 기준으로 -1(기준종가), -2(D-1종가), -6(D-5종가), -21(D-20종가) 필요
-    function mailMake() {
+    function mailMake($stockCountByCategoryArr, $stockPriceDtoArr) {
         // 문서에 필요한 날짜 변수
         $todayFormat = Date('Y-m-d');
         // 하루 전날
         $today = new DateTime();
         $yesterday = $today->modify('-1 day');
-        $dbConnect = new DBConnect();
 
         // 인라인 스타일 코드 간소화
         $table_td = "text-align: center; font-size: 14px; padding: 7px 0;";
-        $value_td = "font-size: 14px; padding: 7px 0 7px 12px;";
+        $value_td = "font-size: 14px; padding: 7px 0 7px 10px;";
         $fonts = "font-family: AppleSDGothic, malgun gothic, nanum gothic, Noto Sans KR, sans-serif;";
 
         // 문서 윗부분
@@ -69,91 +62,78 @@ class MailMaker {
                 </thead>
                 <tbody>";
         
-        // category 데이터 (id, name)
-        $stockCategoryArr = $dbConnect->selectStockCategory();
+        // 현재 카테고리에서 몇 번째 행인지
+        $currentCount = 1;
+        
+        foreach ($stockPriceDtoArr as $dto) {
 
-        foreach ($stockCategoryArr as $category) {
-            // 현재 반복에서 사용될 targetCategoryId (가독성을 위해 변수로 담음)
-            $targetCategoryId = $category->stockCategoryId;
+            // 현재 카테고리에 해당하는 stock 개수
+            $stockCount = $stockCountByCategoryArr[$dto->stockCategoryId];
 
+            // 현재 카테고리의 마지막 행이라면 tr에 스타일 적용
+            if ($currentCount == $stockCount) {
+                $mailBody .= "<tr style=\"border-bottom: 1px solid #aaa;\">";
+            // 그 외
+            } else {
+                $mailBody .= "<tr>";
+            }
             
-            // 해당 카테고리에 존재하는 stock_id 배열
-            $stockIdArr = $dbConnect->selectStockIdByCategory($targetCategoryId);
+            // 해당 카테고리의 첫 행이라면 th 추가
+            if ($currentCount == 1) {
+                $mailBody .= "<th rowspan=\"{$stockCount}\" style=\"{$fonts} font-size: 14px;\">{$dto->categoryName}</th>";
+            }
+
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\">{$dto->stockName}</td>";
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dto->d0Value, false, $dto->categoryName) . "</td>";
+
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d1Diff) . "\"> " 
+                            . $this->valueFormat($dto->d1Diff, true) . "</td>";
+
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d5Diff) . "\"> " 
+                            . $this->valueFormat($dto->d5Diff, true) . "</td>";
+        
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d20Diff) . "\"> " 
+                            . $this->valueFormat($dto->d20Diff, true) . "</td>";
+
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\">$dto->remarks";
+
+
+            // 같은 날짜에 해당 항목에만 데이터가 없는 경우 비고 란에 내용 추가
+            // 기준 종가가 없다면 모든 데이터가 null이므로 기준일 휴장만 기입
+            if ($dto->d0Value === null) {
+                if ($dto->remarks != "") {
+                    $mailBody .= "<br>";
+                }
+                $mailBody .= "<span style=\"color: gray; font-size: 12px\">기준일 휴장</span>";
+            } else {
+                if ($dto->remarks === null) {
+                    $mailBody .= "<br>";
+                }
+                // 여러 일자에 휴장인 경우도 있을 수 있으므로 else if를 쓰지 않음
+                if ($dto->d1Diff === null) {
+                    $mailBody .= "<span style=\"color: gray\">D-1 휴장</span>";
+                }
+                if ($dto->d5Diff === null) {
+                    $mailBody .= "<span style=\"color: gray\">D-5 휴장</span>";
+                }
+                if ($dto->d20Diff === null) {
+                    $mailBody .= "<span style=\"color: gray\">D-20 휴장</span>";
+                }
+            }
+            $mailBody .= "</td>";
+            $mailBody .= "</tr>";
             
-            // 해당 카테고리의 stock 개수
-            $stockIdCount = count($stockIdArr);
-
-            // 첫 행이나 마지막 행에 추가해야 할 요소가 있으므로, 이를 확인하기 위해 변수를 선언함 (현재 반복 횟수)
-            $currentCount = 1;
-            
-            // category별 stock 개수만큼씩 반복
-            foreach ($stockIdArr as $targetStockId) {
-
-                // 종가기준일과 stockId에 해당하는 stockPrice 배열 반환
-                // dateFormat : 오늘 날짜 기준으로 n일 이전의 날짜를 Ymd 형태의 정수로 반환하는 메서드
-                // 기준 종가 (현재 날짜 기준 -1일)
-                $valueNow = $dbConnect->selectStockPriceByStockDateAndStockId($this->dateFormat(1), $targetStockId);
-                // D-1 종가 (현재 날짜 기준 -2일)
-                $valueD1 = $dbConnect->selectStockPriceByStockDateAndStockId($this->dateFormat(2), $targetStockId);
-                // D-5 종가 (현재 날짜 기준 -6일)
-                $valueD5 = $dbConnect->selectStockPriceByStockDateAndStockId($this->dateFormat(6), $targetStockId);
-                // D-20 종가 (현재 날짜 기준 -21일)
-                $valueD20 = $dbConnect->selectStockPriceByStockDateAndStockId($this->dateFormat(21), $targetStockId);
-
-                // 해당 카테고리의 마지막 행이라면 
-                if ($currentCount == $stockIdCount) {
-                    $mailBody .= "<tr style=\"border-bottom: 1px solid #aaa;\">";
-                // 그 외
-                } else {
-                    $mailBody .= "<tr>";
-                }
-                
-                // 해당 카테고리의 첫 행이라면
-                if ($currentCount == 1) {
-                    $mailBody .= "<th rowspan=\"{$category->stockCount}\" style=\"{$fonts} font-size: 14px;\">{$category->categoryName}</th>";
-                }
-
-                $mailBody .= "<td style=\"{$fonts} {$table_td}\">{$valueNow->stockName}</td>";
-                $mailBody .= "<td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($valueNow->stockValue) . "</td>";
-
-
-                // 각 데이터가 없는 경우 일단 - 처리해두었는데
-                // 지금처럼 - 처리할지, 아니면 stock_date 값을 낮추면서 가장 최근의 값을 가져와서 계산할지 얘기해보고 바꾸기
-
-                // 기준종가도 데이터가 없는 경우 - 처리를 할지 아니면 가장 최근의 값을 가져와서 계산할지 얘기해보아야 함
-
-                if ($valueD1 == null) {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td}\">-&nbsp</td>";                   
-                } else {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($valueNow->stockValue - $valueD1->stockValue) . "\"> " 
-                                    . $this->changeSymbolByUpDown($valueNow->stockValue - $valueD1->stockValue) . "&nbsp" 
-                                    . $this->valueFormat($valueNow->stockValue - $valueD1->stockValue) . "</td>";
-                }
-
-                if ($valueD5 == null) {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td}\">-&nbsp</td>";                           
-                } else {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($valueNow->stockValue - $valueD5->stockValue) . "\"> " 
-                    . $this->changeSymbolByUpDown($valueNow->stockValue - $valueD5->stockValue) . "&nbsp" 
-                    . $this->valueFormat($valueNow->stockValue - $valueD5->stockValue) . "</td>";
-                }
-                
-                if ($valueD20 == null) {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td}\">-&nbsp</td>";                           
-                } else {
-                    $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($valueNow->stockValue - $valueD20->stockValue) . "\"> " 
-                                    . $this->changeSymbolByUpDown($valueNow->stockValue - $valueD20->stockValue) . "&nbsp" 
-                                    . $this->valueFormat($valueNow->stockValue - $valueD20->stockValue) . "</td>";
-                }
-
-                $mailBody .= "<td style=\"{$fonts} {$table_td}\">$valueNow->remarks</td>";
-                $mailBody .= "</tr>";
-
+            // 현재 카테고리의 마지막 행이라면 반복 횟수 초기화
+            if ($currentCount == $stockCount) {
+                $currentCount = 1;
+            // 그 외
+            } else {
                 // 반복 횟수 + 1
                 $currentCount++;
             }
-                
+
         }
+                
             
         // 태그 닫아주기
         $mailBody .= "</tbody></table></body></html>";
@@ -172,24 +152,38 @@ class MailMaker {
         }
     }
     
-    // 문자 변경
-    function changeSymbolByUpDown($diff) {
-        if ($diff > 0) {
-            return "▲";
-        } else if ($diff < 0) {
-            return "▼";
-        } else {
-            return "&nbsp-&nbsp";
-        }
-    }
+    // 증감값에 절댓값 처리 + 포맷팅 + 특수문자 처리
+    // 카테고리에 따라 종가 값에 %나 $를 붙여줘야 하는 경우가 있음
+    // id가 바뀔 때를 대비해서 Name으로 인자를 받음 (기본값이 있어서 필요한 셀에서만 입력)
+    function valueFormat($value, $hasSymbol, $categoryName="") {
+        $result = "";
+        
+        if ($value != null && $value != 0) {
+
+            if ($value > 0) {
+                if ($hasSymbol == true) {
+                    $result .= "▲&nbsp;";
+                }
+                $result .= number_format($value, 2);
     
-    // 증감값에 절댓값 처리 + 포맷팅
-    function valueFormat($value) {
-        if ($value == 0) {
-            return null;
+            } else if ($value < 0) {
+                if ($hasSymbol == true) {
+                    $result .= "▼&nbsp;";
+                }
+                $result .= number_format(abs($value), 2);
+            }
+
+            // categoryName이 특정 카테고리라면 %나 $를 추가함
+            if (str_replace(" ", "", $categoryName) == "주요금리") {
+                $result .= "%";
+            } else if (str_replace(" ", "", $categoryName) == "주요원자재") {
+                $result = "$" . $result;
+            }
+
         } else {
-            return number_format(abs($value), 2);
+            $result .= "&nbsp-&nbsp";
         }
+        return $result;
     }
     
     // 날짜를 계산해서 int형으로 바꿔서 반환

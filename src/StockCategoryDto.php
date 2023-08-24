@@ -4,7 +4,7 @@ namespace App\DailyReportCrawler;
 
 /**
  * @author 서영
- * stock_category 테이블 데이터
+ * stock_category 
  */
 class StockCategoryDto {
     public int $stockCategoryId;

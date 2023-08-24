@@ -10,20 +10,14 @@ use mysqli_result;
 
 Class DBConnect{
     
-    private $servername;
-    private $username;
-    private $password;
-    private $database;
-    private $port;
+    private $servername = "54.180.60.132";
+    private $username = "es_stock";
+    private $password = "f%Gb!3sT%\$Vx1a";
+    private $database = "es_stock";
+    private $port = 3306;
     private $conn;
 
     public function __construct(){
-
-        $this->servername = "54.180.60.132";
-        $this->username = "es_stock";
-        $this->password = "f%Gb!3sT%\$Vx1a";
-        $this->database = "es_stock";
-        $this->port = 3306;
 
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database, $this->port);
 
@@ -61,57 +55,77 @@ Class DBConnect{
     
     /**
      * @author 서영
-     * @param $targetStockDate 종가 기준일, $targetCategory 지수 카테고리
-     * @return StockPriceDto stockPrice 데이터 배열
+     * @return StockPriceDto 
+     * 기준 종가와 d-1, d-5, d-20 종가의 차이 데이터를 포함한 데이터
      */
-    public function selectStockPriceByStockDateAndStockId($targetStockDate, $targetStockId) {
-        $query = "SELECT p.STOCK_DATE, p.STOCK_ID, s.STOCK_NAME, p.STOCK_VALUE, ifnull(s.REMARKS, '') AS 'REMARKS'
-                  FROM stock_price AS p
-                  JOIN stock AS s
-                  ON p.STOCK_ID = s.STOCK_ID
-                  WHERE p.STOCK_DATE = ? 
-                        AND p.STOCK_ID = ?
-                  ORDER BY p.STOCK_ID";
+    public function selectStockPriceDiff($targetStockDate) {
+
+        // LIMIT과 OFFSET을 활용해서 특정 날짜로부터 n번째 날짜를 구해서 where 조건으로 넣음
+        // 종가 값 간의 증감 계산을 쿼리 내에서 수행함
+
+        // 원본 엑셀 파일에서 증감이 -0.00**일 경우 변동없음(-)으로 나타내는 것이 아니라
+        // ▼ 0.00로 나타내어 미세한 변동이 있음을 보여주기 때문에 쿼리 내에서는 반올림을 하지 않았음
+
+        $query = "
+        SELECT c.STOCK_CATEGORY_ID, c.CATEGORY_NAME, s.STOCK_ID, s.STOCK_NAME, d0.STOCK_VALUE AS 'D0_VALUE', (d0.STOCK_VALUE - d1.STOCK_VALUE) AS 'D1_DIFF',
+               (d0.STOCK_VALUE - d5.STOCK_VALUE) AS 'D5_DIFF', (d0.STOCK_VALUE - d20.STOCK_VALUE) AS 'D20_DIFF', s.REMARKS
+        FROM stock AS s
+        LEFT JOIN stock_category AS c
+        ON c.STOCK_CATEGORY_ID = s.STOCK_CATEGORY_ID
+
+        LEFT JOIN (SELECT *
+                   FROM stock_price
+                   WHERE STOCK_DATE = ?) AS d0
+        ON d0.STOCK_ID = s.STOCK_ID
+        
+        LEFT JOIN (SELECT *
+                   FROM stock_price
+                   WHERE STOCK_DATE = (SELECT STOCK_DATE
+                                       FROM stock_price
+                                       WHERE STOCK_DATE <= ?
+                                       GROUP BY STOCK_DATE
+                                       ORDER BY STOCK_DATE DESC, STOCK_ID
+                                       LIMIT 1 OFFSET 1)
+                  ) AS d1
+        ON s.STOCK_ID = d1.STOCK_ID
+        
+        LEFT JOIN (SELECT *
+                   FROM stock_price
+                   WHERE STOCK_DATE = (SELECT STOCK_DATE
+                                       FROM stock_price
+                                       WHERE STOCK_DATE <= ?
+                                       GROUP BY STOCK_DATE
+                                       ORDER BY STOCK_DATE DESC, STOCK_ID
+                                       LIMIT 1 OFFSET 5)
+                  ) AS d5
+        ON s.STOCK_ID = d5.STOCK_ID
+        
+        LEFT JOIN (SELECT *
+                   FROM stock_price
+                   WHERE STOCK_DATE = (SELECT STOCK_DATE
+                                       FROM stock_price
+                                       WHERE STOCK_DATE <= ?
+                                       GROUP BY STOCK_DATE
+                                       ORDER BY STOCK_DATE DESC, STOCK_ID
+                                       LIMIT 1 OFFSET 20)
+                  ) AS d20
+        ON s.STOCK_ID = d20.STOCK_ID
+        ORDER BY s.STOCK_ID";
         $statement = $this->conn->prepare($query);
 
         // i : 정수형 인자를 바인딩함
-        $statement->bind_param('ii', $targetStockDate, $targetStockId);
+        $statement->bind_param('iiii', $targetStockDate, $targetStockDate, $targetStockDate, $targetStockDate);
         $statement->execute();
         $dataArr = $statement->get_result();
         
-        $resultDto = null;
+        $resultArr = [];
         foreach ($dataArr as $data) {
-            $resultDto = new StockPriceDto($data['STOCK_DATE'], $data['STOCK_ID'], $data['STOCK_NAME'], $data['STOCK_VALUE'], $data['REMARKS']);
-            // stock_id를 key로 해서 price 저장
+            $dto = new StockPriceDto($data['STOCK_CATEGORY_ID'], $data['CATEGORY_NAME'], $data['STOCK_ID'], $data['STOCK_NAME'], 
+                                     $data['D0_VALUE'], $data['D1_DIFF'], $data['D5_DIFF'], $data['D20_DIFF'], $data['REMARKS']);
+            $resultArr[] = $dto;
         }
 
-        // 해당 Dto가 존재하지 않는다면 stock_value가 존재하지 않는다는 의미
-        // 값이 꼬이지 않도록 -1을 담아서 저장해둠 (정상적으로 저장된종가는 항상 0 이상이므로)
-        if ($resultDto == null) {
-            $stockName = $this->selectStockNameByStockId($targetStockId);
-            $resultDto = new StockPriceDto($targetStockDate, $targetStockId, $stockName, -1, "");
-        }
-
-        return $resultDto;
-    }
-    
-    /**
-     * @author 서영
-     * @return string stockName
-     * stockId를 조건으로 stockName 찾기
-     */
-    public function selectStockNameByStockId($stockId) {
-        $query = "SELECT STOCK_NAME
-                  FROM stock
-                  WHERE STOCK_ID = ?";
-        $statement = $this->conn->prepare($query);
-
-        // i : 정수형 인자를 바인딩함
-        $statement->bind_param('i', $stockId);
-        $statement->execute();
-        $result = $statement->get_result()->fetch_assoc()['STOCK_NAME'];
-
-        return $result;
+        return $resultArr;
     }
 
     /**
@@ -137,49 +151,19 @@ Class DBConnect{
      * stock 테이블과 category 테이블을 조인하고
      * category 그룹별 stock 개수를 구한 후, category_id를 key로 해서 배열로 반환
      */
-    public function selectStockCategory() {
-        $query = "SELECT s.stock_category_id, MAX(c.CATEGORY_NAME) AS category_name, COUNT(*) AS 'stock_count'
+    public function selectStockCountByCategory() {
+        $query = "SELECT stock_category_id, COUNT(*) AS 'stock_count'
                   FROM stock AS s
-                  JOIN stock_category AS c
-                  ON s.STOCK_CATEGORY_ID = c.STOCK_CATEGORY_ID
                   GROUP BY s.STOCK_CATEGORY_ID
                   ORDER BY stock_category_id";
         $dataArr = $this->conn->query($query)->fetch_all();
 
         $resultArr = [];
         foreach ($dataArr as $data) {
-            $stockPrice = new StockCategoryDto($data[0], $data[1], $data[2]);
-            // stock_category_id를 key로 해서 price 저장
-            $resultArr[$data[0]] = $stockPrice;
+            $resultArr[$data[0]] = $data[1];
         }
-
         return $resultArr;
     }
-
-    /**
-     * @author 서영
-     * @return array
-     * 해당 카테고리에 존재하는 stock_id 반환 
-     */
-    public function selectStockIdByCategory($categoryId) {
-        $query = "SELECT STOCK_ID
-                  FROM stock
-                  WHERE STOCK_CATEGORY_ID = ?";
-        $statement = $this->conn->prepare($query);
-
-        // i : 정수형 인자를 바인딩함
-        $statement->bind_param('i', $categoryId);
-        $statement->execute();
-        $dataArr = $statement->get_result()->fetch_all();
-
-        $resultArr = [];
-        foreach ($dataArr as $data) {
-            $resultArr[] = $data[0];
-        }
-
-        return $resultArr;
-    }
-
 
 
     public function closeConnection() {
