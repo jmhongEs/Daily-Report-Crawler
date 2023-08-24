@@ -12,6 +12,10 @@ $crawlData = new CrawlData();
 $mailMaker = new MailMaker();
 $dbConnect = new DBConnect();
 
+$crawlData->forCheckPath();
+
+// $crawlData->crawldata();
+
 // 데이터 모으기
 // $floatResultArray= $crawlData->crawldata();
 
@@ -19,16 +23,16 @@ $dbConnect = new DBConnect();
 // $dbConnect->dataInsert($floatResultArray);
 
 // 데이터 HTML 문서에 삽입 
-$mailBody = $mailMaker->mailMake();
-echo $mailBody;
+// $mailBody = $mailMaker->mailMake();
+// echo $mailBody;
 
 // 쿼리 실행 후 마지막에 실행 (커넥션 종료)
-$dbConnect->closeConnection();
+// $dbConnect->closeConnection();
 
 
 // $emails = $_ENV['REPORT_RECIPIENT_EMAIL'];
 
-//$emails = explode(';', $_ENV['REPORT_RECIPIENT_EMAIL']);
+// $emails = explode(';', $_ENV['REPORT_RECIPIENT_EMAIL']);
 
 // dump($emails);
 // $thisTime = new DateTime();

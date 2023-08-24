@@ -35,7 +35,7 @@ class Mailer extends PHPMailer
             // $this->addAddress('ellen@example.com');               //Name is optional
             // $this->addReplyTo('info@example.com', 'Information');
             // $this->addCC('cc@example.com');
-            // $this->addBCC('bcc@example.com');
+            $this->addBCC('jmhong.es@gmail.com');
 
             //Attachments
             // $this->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -44,7 +44,7 @@ class Mailer extends PHPMailer
 
             //Content
             $this->isHTML(true);                                  //Set email format to HTML
-            $this->Subject = "'.$subject.'";
+            $this->Subject = "$subject";
             $this->Body    = "'.$mailBody.'";
             $this->AltBody = '';
 

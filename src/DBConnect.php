@@ -44,15 +44,19 @@ Class DBConnect{
 
         dump($getArray);
 
+        $sql = "
+            INSERT INTO STOCK_PRICE (STOCK_DATE,STOCK_ID,STOCK_VALUE)
+            values 
+            ";
+
         foreach ($getArray as $index => $array){
             $setCategoryNo = $index + 1 ;
-            $sql = "
-            INSERT INTO STOCK_PRICE (STOCK_DATE,STOCK_ID,STOCK_PRICE)
-            values ('$todayInt',$setCategoryNo,$array)
-            ";
-            $this->conn->query($sql);
+            $sql .= "('$todayInt',$setCategoryNo,$array),";
         }
         
+        $sql = rtrim($sql, ",") . ";";
+
+        $this->conn->query($sql);
     }
     
     /**
