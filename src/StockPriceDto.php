@@ -4,20 +4,28 @@ namespace App\DailyReportCrawler;
 
 /**
  * @author 서영
- * stock 테이블과 stock_price 테이블을 조인한 데이터를 담을 DTO 클래스
  */
+
 class StockPriceDto {
-    public int $stockDate;
+    public int $stockCategoryId;
+    public string $categoryName;
     public int $stockId;
     public string $stockName;
-    public float $stockValue;
-    public string $remarks;
+    public ?float $d0Value;
+    public ?float $d1Diff;
+    public ?float $d5Diff;
+    public ?float $d20Diff;
+    public ?string $remarks;
 
-    public function __construct($stockDate, $stockId, $stockName, $stockValue, $remarks) {
-        $this->stockDate = $stockDate;
+    public function __construct($stockCategoryId, $categoryName, $stockId, $stockName, $d0Value, $d1Diff, $d5Diff, $d20Diff, $remarks) {
+        $this->stockCategoryId = $stockCategoryId;
+        $this->categoryName = $categoryName;
         $this->stockId = $stockId;
         $this->stockName = $stockName;
-        $this->stockValue = $stockValue;
+        $this->d0Value = $d0Value;
+        $this->d1Diff = $d1Diff;
+        $this->d5Diff = $d5Diff;
+        $this->d20Diff = $d20Diff;
         $this->remarks = $remarks;
     }
 }
