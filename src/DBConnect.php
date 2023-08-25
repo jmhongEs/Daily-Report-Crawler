@@ -107,103 +107,101 @@ class DBConnect
      * @return StockPriceDto 
      * 기준 종가와 d-1, d-5, d-20 종가의 차이 데이터를 포함한 데이터
      */
-    public function selectStockPriceDiff($targetStockDate)
-    {
+    public function selectStockPrice() {
 
         // LIMIT과 OFFSET을 활용해서 특정 날짜로부터 n번째 날짜를 구해서 where 조건으로 넣음
-        // 종가 값 간의 증감 계산을 쿼리 내에서 수행함
 
-        // 원본 엑셀 파일에서 증감이 -0.00**일 경우 변동없음(-)으로 나타내는 것이 아니라
-        // ▼ 0.00로 나타내어 미세한 변동이 있음을 보여주기 때문에 쿼리 내에서는 반올림을 하지 않았음
+        // 원본 엑셀 파일에서는 증감이 -0.00**일 경우 변동없음(-)으로 나타내는 것이 아니라
+        // ▼ 0.00로 나타내어 미세한 변동이 있음을 보여주고 있음
+
+        // stock_id별로 가장 최근의 종가기준일을 가져옴 => 기준 종가 (D0)
+        // 가장 최근 종가기준일보다 작은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-1 종가 
+        // 기준 종가일에서 -5한 날짜보다 작거나 같은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-5 종가
+        // 기준 종가일에서 -20한 날짜보다 작거나 같은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-20 종가
+
 
         $query = "
-        SELECT c.STOCK_CATEGORY_ID, c.CATEGORY_NAME, s.STOCK_ID, s.STOCK_NAME, d0.STOCK_VALUE AS 'D0_VALUE', (d0.STOCK_VALUE - d1.STOCK_VALUE) AS 'D1_DIFF',
-               (d0.STOCK_VALUE - d5.STOCK_VALUE) AS 'D5_DIFF', (d0.STOCK_VALUE - d20.STOCK_VALUE) AS 'D20_DIFF', s.REMARKS
-        FROM stock AS s
-        LEFT JOIN stock_category AS c
-        ON c.STOCK_CATEGORY_ID = s.STOCK_CATEGORY_ID
+                SELECT GBN, STOCK_DATE, AA.STOCK_ID, AA.STOCK_VALUE, s.STOCK_NAME, s.REMARKS, c.STOCK_CATEGORY_ID, c.CATEGORY_NAME
+                FROM (SELECT 'D0' GBN, A.STOCK_PRICE_ID, A.STOCK_DATE, A.STOCK_ID, A.STOCK_VALUE
+                      FROM stock_price A
+                      JOIN ( 
+                            SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
+                            FROM stock_price 
+                            WHERE DBSTATUS = 'A'
+                            GROUP BY stock_id
+                      ) B 
+                      ON (A.STOCK_ID = B.STOCK_ID and A.STOCK_DATE = B.MX_STOCK_DATE)
+                      WHERE A.DBSTATUS = 'A'
+                
+                      UNION ALL
+        
+                      SELECT 'D1' GBN, A.STOCK_PRICE_ID, A.STOCK_DATE, A.STOCK_ID, A.STOCK_VALUE 
+                      FROM stock_price A
+                      JOIN (
+                            SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
+                            FROM stock_price 
+                            WHERE STOCK_DATE < (SELECT max(STOCK_DATE) 
+                                                FROM stock_price 
+                                                WHERE DBSTATUS = 'A')
+                                  AND DBSTATUS = 'A' 
+                            GROUP BY STOCK_ID            
+                      ) B 
+                      ON (A.STOCK_ID = B.STOCK_ID and A.STOCK_DATE = B.MX_STOCK_DATE)    
+                      WHERE A.DBSTATUS = 'A'  
+                   
+                      UNION ALL
+            
+                      SELECT 'D5' GBN, A.STOCK_PRICE_ID, A.STOCK_DATE, A.STOCK_ID, A.STOCK_VALUE 
+                      FROM stock_price A
+                      JOIN (
+                            SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
+                            FROM stock_price 
+                            WHERE STOCK_DATE <= (SELECT distinct STOCK_DATE 
+                                                 FROM stock_price 
+                                                 ORDER BY STOCK_DATE DESC 
+                                                 LIMIT 1 OFFSET 5)
+                            AND DBSTATUS = 'A'
+                            GROUP BY STOCK_ID            
+                      ) B 
+                      ON (A.STOCK_ID = B.STOCK_ID AND A.STOCK_DATE = B.MX_STOCK_DATE)
+                      WHERE A.DBSTATUS = 'A'
+                
+                      UNION ALL
+            
+                      SELECT 'D20' GBN, A.STOCK_PRICE_ID, A.STOCK_DATE, A.STOCK_ID, A.STOCK_VALUE 
+                      FROM stock_price A
+                      JOIN (
+                            SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
+                            FROM stock_price 
+                            WHERE STOCK_DATE <= (SELECT distinct STOCK_DATE 
+                                                 FROM stock_price
+                                                 ORDER BY STOCK_DATE DESC 
+                                                 LIMIT 1 OFFSET 20)
+                            AND DBSTATUS = 'A'
+                            GROUP BY STOCK_ID            
+                      ) B 
+                      ON (A.STOCK_ID = B.STOCK_ID AND A.STOCK_DATE = B.MX_STOCK_DATE)
+                      WHERE A.DBSTATUS = 'A'
+                ) AA
+                JOIN stock AS s
+                ON s.STOCK_ID = AA.STOCK_ID
+                JOIN stock_category AS c
+                ON c.STOCK_CATEGORY_ID = s.STOCK_CATEGORY_ID
+                WHERE s.DBSTATUS = 'A' AND c.DBSTATUS = 'A'";
 
-        LEFT JOIN (SELECT *
-                   FROM stock_price
-                   WHERE STOCK_DATE = ?) AS d0
-        ON d0.STOCK_ID = s.STOCK_ID
-        
-        LEFT JOIN (SELECT *
-                   FROM stock_price
-                   WHERE STOCK_DATE = (SELECT STOCK_DATE
-                                       FROM stock_price
-                                       WHERE STOCK_DATE <= ?
-                                       GROUP BY STOCK_DATE
-                                       ORDER BY STOCK_DATE DESC, STOCK_ID
-                                       LIMIT 1 OFFSET 1)
-                  ) AS d1
-        ON s.STOCK_ID = d1.STOCK_ID
-        
-        LEFT JOIN (SELECT *
-                   FROM stock_price
-                   WHERE STOCK_DATE = (SELECT STOCK_DATE
-                                       FROM stock_price
-                                       WHERE STOCK_DATE <= ?
-                                       GROUP BY STOCK_DATE
-                                       ORDER BY STOCK_DATE DESC, STOCK_ID
-                                       LIMIT 1 OFFSET 5)
-                  ) AS d5
-        ON s.STOCK_ID = d5.STOCK_ID
-        
-        LEFT JOIN (SELECT *
-                   FROM stock_price
-                   WHERE STOCK_DATE = (SELECT STOCK_DATE
-                                       FROM stock_price
-                                       WHERE STOCK_DATE <= ?
-                                       GROUP BY STOCK_DATE
-                                       ORDER BY STOCK_DATE DESC, STOCK_ID
-                                       LIMIT 1 OFFSET 20)
-                  ) AS d20
-        ON s.STOCK_ID = d20.STOCK_ID
-        ORDER BY s.STOCK_ID";
         $statement = $this->conn->prepare($query);
-
-        // i : 정수형 인자를 바인딩함
-        $statement->bind_param('iiii', $targetStockDate, $targetStockDate, $targetStockDate, $targetStockDate);
         $statement->execute();
         $dataArr = $statement->get_result();
 
         $resultArr = [];
         foreach ($dataArr as $data) {
-            $dto = new StockPriceDto(
-                $data['STOCK_CATEGORY_ID'],
-                $data['CATEGORY_NAME'],
-                $data['STOCK_ID'],
-                $data['STOCK_NAME'],
-                $data['D0_VALUE'],
-                $data['D1_DIFF'],
-                $data['D5_DIFF'],
-                $data['D20_DIFF'],
-                $data['REMARKS']
-            );
+            $dto = new StockPriceDto($data['GBN'], $data['STOCK_CATEGORY_ID'], $data['CATEGORY_NAME'], $data['STOCK_DATE'], 
+                                     $data['STOCK_ID'], $data['STOCK_NAME'], $data['STOCK_VALUE'], $data['REMARKS']);
             $resultArr[] = $dto;
         }
 
         return $resultArr;
     }
-
-    /**
-     * @author 서영
-     * @return array stock 테이블의 모든 stock_id를 담은 배열 
-     */
-    public function selectStockIdAll()
-    {
-        $query = "SELECT STOCK_ID FROM stock";
-        $dataArr = $this->conn->query($query);
-
-        $resultArr = array();
-        while ($row = $dataArr->fetch_row()) {
-            // stock_id가 int가 아닌 string으로 저장되는 불편함이 있어서 int로 모두 변환한 후 반환
-            $resultArr[] = intval($row[0]);
-        }
-        return $resultArr;
-    }
-
 
     /**
      * @author 서영
@@ -226,9 +224,25 @@ class DBConnect
         return $resultArr;
     }
 
+    /**
+     * 이메일 발송 시 로그 데이터를 남김 (발송 여부와 함께)
+     * @author 서영
+     * @param int $stockDate 
+     * @param int $status : 1(미발송), 2(발송완료)
+     */
+    public function insertEmailLog($stockDate, $status) {
+        $query = "INSERT INTO email_log (STOCK_DATE, EMAIL_LOG_MASTER_ID)
+                  VALUES (?, ?)";
+        $statement = $this->conn->prepare($query);
+
+        // i : 정수형 인자를 바인딩함
+        $statement->bind_param('ii', $stockDate, $status);
+        $statement->execute();
+    }
 
     public function closeConnection()
     {
         $this->conn->close();
     }
+    
 }

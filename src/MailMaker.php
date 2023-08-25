@@ -7,13 +7,56 @@ use DateTime;
 
 class MailMaker {
 
-    // 오늘 기준으로 -1(기준종가), -2(D-1종가), -6(D-5종가), -21(D-20종가) 필요
+    /**
+     * 메일 바디를 만드는 메서드
+     * todo : 템플릿과 메일 만드는 클래스를 분리하기
+     * @param DateTime $targetDate 
+     * @param array $stockCountByCategoryArr 
+     * @param array $stockPriceDtoArr 
+     * @return string 
+     */
     function mailMake($stockCountByCategoryArr, $stockPriceDtoArr) {
+
+        // mailMaker에서 사용하기 편한 형태로 정제
+        $cleanedStockPriceArr = [];
+
+        // stock_id를 key로 하고 GBN별 종가 지수와 기타 정보들 담기
+        foreach ($stockPriceDtoArr as $dto) {
+            // 공통
+            // ??= : 해당 Key에 값이 비어있을 경우에만 값을 할당함
+            $cleanedStockPriceArr[$dto->stockId]['stockCategoryId'] ??= $dto->stockCategoryId;
+            $cleanedStockPriceArr[$dto->stockId]['categoryName'] ??= $dto->categoryName;
+            $cleanedStockPriceArr[$dto->stockId]['stockName'] ??= $dto->stockName;
+            $cleanedStockPriceArr[$dto->stockId]['remarks'] ??= $dto->remarks;
+
+            // D-0 (기준 종가)
+            if ($dto->gbn == 'D0') {
+                $cleanedStockPriceArr[$dto->stockId]['d0Value'] = $dto->stockValue;
+                $cleanedStockPriceArr[$dto->stockId]['d0StockDate'] = $dto->stockDate;
+                
+            // D-1
+            } else if ($dto->gbn == 'D1') {
+            $cleanedStockPriceArr[$dto->stockId]['d1Value'] = $dto->stockValue;
+            $cleanedStockPriceArr[$dto->stockId]['d1StockDate'] = $dto->stockDate;
+            
+            // D-5
+            } else if ($dto->gbn == 'D5') {
+            $cleanedStockPriceArr[$dto->stockId]['d5Value'] = $dto->stockValue;
+            $cleanedStockPriceArr[$dto->stockId]['d5StockDate'] = $dto->stockDate;
+            
+            // D-20
+            } else if ($dto->gbn == 'D20') {
+                $cleanedStockPriceArr[$dto->stockId]['d20Value'] = $dto->stockValue;
+                $cleanedStockPriceArr[$dto->stockId]['d20StockDate'] = $dto->stockDate;
+            }
+
+        }
+
+        var_dump($cleanedStockPriceArr);
+        exit;
+
         // 문서에 필요한 날짜 변수
         $todayFormat = Date('Y-m-d');
-        // 하루 전날
-        $today = new DateTime();
-        $yesterday = $today->modify('-1 day');
 
         // 인라인 스타일 코드 간소화
         $table_td = "text-align: center; font-size: 14px; padding: 7px 0;";
@@ -34,18 +77,18 @@ class MailMaker {
         <body style=\"width: 800px;  padding: 0 20px;\">
 
             <header style=\"display: flex; justify-content: space-between; align-items: flex-end; margin: 0 30px 0;\">
-                <h5 style=\"{$fonts} margin-bottom: 9px;\">메쎄이상</h5>
+                <h4 style=\"{$fonts} margin-bottom: 9px;\">메쎄이상</h4>
                 <h1 style=\"{$fonts} margin-bottom: 9px;\">Daily Report</h1>
-                <h5 style=\"{$fonts} margin-bottom: 9px;\"> {$todayFormat}</h5>
+                <h4 style=\"{$fonts} margin-bottom: 9px;\"> {$todayFormat}</h4>
             </header>
             <hr style=\"margin: 0 0 2px;\">
-            <hr style=\"margin: 0;\">
+            <hr style=\"margin: 0 0 4px;\">
 
             <div style=\"display: flex; justify-content: space-between;\">
                 <h4 style=\"{$fonts} margin-bottom: 4px;\">[주요지수 변동현황]</h4>
-                <h5 style=\"{$fonts} margin-bottom: 4px;\">
-                    {$yesterday->format('(m월 d일 종가 기준)')}
-                </h5>
+                <h4 style=\"{$fonts} margin-bottom: 4px;\">
+                    (08월 22일 종가 기준)
+                </h4>
             </div>
 
             <table style=\"border-collapse: collapse; margin: 0 auto; width: 100%;\">
@@ -101,6 +144,7 @@ class MailMaker {
             // 같은 날짜에 해당 항목에만 데이터가 없는 경우 비고 란에 내용 추가
             // 기준 종가가 없다면 모든 데이터가 null이므로 기준일 휴장만 기입
             if ($dto->d0Value === null) {
+                // 기본 비고가 있는 경우에만 줄바꿈 후 휴장 표시
                 if ($dto->remarks != "") {
                     $mailBody .= "<br>";
                 }
@@ -114,9 +158,17 @@ class MailMaker {
                     $mailBody .= "<span style=\"color: gray\">D-1 휴장</span>";
                 }
                 if ($dto->d5Diff === null) {
+                    // 앞에 휴장 글자가 있다면 줄바꿈
+                    if (substr($mailBody, -mb_strlen("휴장</span>") === "휴장</span>")) {
+                        $mailBody .= "<br>";
+                    }
                     $mailBody .= "<span style=\"color: gray\">D-5 휴장</span>";
                 }
                 if ($dto->d20Diff === null) {
+                    // 앞에 휴장 글자가 있다면 줄바꿈
+                    if (substr($mailBody, -mb_strlen("휴장</span>") === "휴장</span>")) {
+                        $mailBody .= "<br>";
+                    }
                     $mailBody .= "<span style=\"color: gray\">D-20 휴장</span>";
                 }
             }
@@ -134,7 +186,6 @@ class MailMaker {
 
         }
                 
-            
         // 태그 닫아주기
         $mailBody .= "</tbody></table></body></html>";
 
@@ -154,7 +205,7 @@ class MailMaker {
     
     // 증감값에 절댓값 처리 + 포맷팅 + 특수문자 처리
     // 카테고리에 따라 종가 값에 %나 $를 붙여줘야 하는 경우가 있음
-    // id가 바뀔 때를 대비해서 Name으로 인자를 받음 (기본값이 있어서 필요한 셀에서만 입력)
+    // delete/insert하면서 id가 바뀔 때를 대비해서 Name으로 인자를 받음 (기본값이 있어서 필요한 셀에서만 입력)
     function valueFormat($value, $hasSymbol, $categoryName="") {
         $result = "";
         
