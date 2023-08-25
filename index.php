@@ -17,10 +17,11 @@ $crawlData->forCheckPath();
 // $crawlData->crawldata();
 
 // 데이터 모으기
-// $floatResultArray= $crawlData->crawldata();
+$floatResultArray= $crawlData->forCheckPath();
+
 
 // DB에 삽입
-// $dbConnect->dataInsert($floatResultArray);
+$dbConnect->dataInsert($floatResultArray);
 
 // 데이터 HTML 문서에 삽입 
 

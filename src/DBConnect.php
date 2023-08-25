@@ -8,8 +8,9 @@ use App\DailyReportCrawler\StockCategoryDto;
 use App\DailyReportCrawler\StockPriceDto;
 use mysqli_result;
 
-Class DBConnect{
-    
+class DBConnect
+{
+
     private $servername = "54.180.60.132";
     private $username = "es_stock";
     private $password = "f%Gb!3sT%\$Vx1a";
@@ -17,7 +18,8 @@ Class DBConnect{
     private $port = 3306;
     private $conn;
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database, $this->port);
 
@@ -26,39 +28,87 @@ Class DBConnect{
         }
     }
 
-    public function dataInsert($getArray){
-
-        unset($getArray[0]);
-        unset($getArray[1]);
-
-        $getArray = array_values($getArray);
-
-        $dateFormat = Date('Ymd', strtotime('-1 day'));
-        $todayInt = intval($dateFormat);
-
+    public function dataInsert($getArray)
+    {
+        foreach ($getArray as &$array) {
+            $firstElement = $array[0];
+            // "." 문자 제거
+            $newDate = str_replace(".", "", $firstElement);
+            $array[0] = $newDate;
+            $secoundElement = $array[1];
+            $secoundElement = str_replace(",", "", $secoundElement);
+            $array[1] = $secoundElement;
+        }
         dump($getArray);
 
         $sql = "
+        SELECT STOCK_ID, MAX(STOCK_DATE) AS STOCK_DATE
+        FROM STOCK_PRICE
+        GROUP BY STOCK_ID;
+        ";
+
+        $selectedArray = $this->conn->query($sql);
+        $previouseArray = array();
+        while ($row = $selectedArray->fetch_assoc()) {
+            $previouseArray[] = $row;
+        }
+        dump($previouseArray);
+
+        $datesToRemove = array();
+
+        foreach ($previouseArray as $previouseItem) {
+            $datesToRemove[] = $previouseItem['STOCK_DATE'];
+        }
+
+        dump($datesToRemove);
+
+        $newArray = array();
+
+        $i = 0;
+        foreach ($getArray as $key => $item) {
+            $stockDate = $item[0];
+
+            if ($stockDate != $datesToRemove[$i]) {
+                $newArray[$key] = $item;
+            }
+            $i += 1;
+        }
+
+        dump($newArray);
+
+        $sql = "
             INSERT INTO STOCK_PRICE (STOCK_DATE,STOCK_ID,STOCK_VALUE)
-            values 
+                VALUES
             ";
 
-        foreach ($getArray as $index => $array){
-            $setCategoryNo = $index + 1 ;
-            $sql .= "('$todayInt',$setCategoryNo,$array),";
+        foreach ($newArray as $key => $array) {
+            $sql .= "('$array[0]',$key,'$array[1]'),";
         }
-        
-        $sql = rtrim($sql, ",") . ";";
+        // 마지막 쉼표 제거
+        $sql = rtrim($sql, ',');
 
-        $this->conn->query($sql);
+        $sql .= ";";
+
+        $result = $this->conn->query($sql);
+        if($result === TRUE){
+            $valueToInsert = $this->conn->real_escape_string($getArray[1][0]);
+            $sql = "
+                INSERT INTO STOCK_DATE_LOG (STOCK_DATE) value($valueToInsert);
+            ";
+            $this->conn->query($sql);
+        }else{
+            echo "쿼리 실행 실패: " . $this->conn->error;
+        }
+
     }
-    
+
     /**
      * @author 서영
      * @return StockPriceDto 
      * 기준 종가와 d-1, d-5, d-20 종가의 차이 데이터를 포함한 데이터
      */
-    public function selectStockPriceDiff($targetStockDate) {
+    public function selectStockPriceDiff($targetStockDate)
+    {
 
         // LIMIT과 OFFSET을 활용해서 특정 날짜로부터 n번째 날짜를 구해서 where 조건으로 넣음
         // 종가 값 간의 증감 계산을 쿼리 내에서 수행함
@@ -117,11 +167,20 @@ Class DBConnect{
         $statement->bind_param('iiii', $targetStockDate, $targetStockDate, $targetStockDate, $targetStockDate);
         $statement->execute();
         $dataArr = $statement->get_result();
-        
+
         $resultArr = [];
         foreach ($dataArr as $data) {
-            $dto = new StockPriceDto($data['STOCK_CATEGORY_ID'], $data['CATEGORY_NAME'], $data['STOCK_ID'], $data['STOCK_NAME'], 
-                                     $data['D0_VALUE'], $data['D1_DIFF'], $data['D5_DIFF'], $data['D20_DIFF'], $data['REMARKS']);
+            $dto = new StockPriceDto(
+                $data['STOCK_CATEGORY_ID'],
+                $data['CATEGORY_NAME'],
+                $data['STOCK_ID'],
+                $data['STOCK_NAME'],
+                $data['D0_VALUE'],
+                $data['D1_DIFF'],
+                $data['D5_DIFF'],
+                $data['D20_DIFF'],
+                $data['REMARKS']
+            );
             $resultArr[] = $dto;
         }
 
@@ -132,7 +191,8 @@ Class DBConnect{
      * @author 서영
      * @return array stock 테이블의 모든 stock_id를 담은 배열 
      */
-    public function selectStockIdAll() {
+    public function selectStockIdAll()
+    {
         $query = "SELECT STOCK_ID FROM stock";
         $dataArr = $this->conn->query($query);
 
@@ -151,7 +211,8 @@ Class DBConnect{
      * stock 테이블과 category 테이블을 조인하고
      * category 그룹별 stock 개수를 구한 후, category_id를 key로 해서 배열로 반환
      */
-    public function selectStockCountByCategory() {
+    public function selectStockCountByCategory()
+    {
         $query = "SELECT stock_category_id, COUNT(*) AS 'stock_count'
                   FROM stock AS s
                   GROUP BY s.STOCK_CATEGORY_ID
@@ -166,11 +227,8 @@ Class DBConnect{
     }
 
 
-    public function closeConnection() {
+    public function closeConnection()
+    {
         $this->conn->close();
     }
-
-
 }
-
-?>

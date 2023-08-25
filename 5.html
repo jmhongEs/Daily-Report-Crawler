@@ -29,7 +29,7 @@ function select_chart(pst)
 		
 			
 			
-				<title>ìƒí•´ì¢…í•© : ë„¤ì´ë²„ ì¦ê¶Œ</title>
+				<title>»óÇØÁ¾ÇÕ : ³×ÀÌ¹ö Áõ±Ç</title>
 			
 		
 	
@@ -46,7 +46,7 @@ function select_chart(pst)
 
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<meta name="apple-mobile-web-app-title" content="ë„¤ì´ë²„ ì¦ê¶Œ" />
+<meta name="apple-mobile-web-app-title" content="³×ÀÌ¹ö Áõ±Ç" />
 
 
 
@@ -58,12 +58,12 @@ function select_chart(pst)
         
 			
 		    
-		    	<meta property="og:title" content="ìƒí•´ì¢…í•© : ë„¤ì´ë²„ ì¦ê¶Œ"/>
+		    	<meta property="og:title" content="»óÇØÁ¾ÇÕ : ³×ÀÌ¹ö Áõ±Ç"/>
 		     
 		
 		
 			
-			   <meta property="og:description" content="ê´€ì‹¬ì¢…ëª©ì˜ ì‹¤ì‹œê°„ ì£¼ê°€ë¥¼ ê°€ì¥ ë¹ ë¥´ê²Œ í™•ì¸í•˜ëŠ” ê³³"/>
+			   <meta property="og:description" content="°ü½ÉÁ¾¸ñÀÇ ½Ç½Ã°£ ÁÖ°¡¸¦ °¡Àå ºü¸£°Ô È®ÀÎÇÏ´Â °÷"/>
 		    
 		    
 		
@@ -77,7 +77,7 @@ function select_chart(pst)
 
 <meta property="og:type" content="article"/>
 <meta property="og:article:thumbnailUrl" content=""/>
-<meta property="og:article:author" content="ë„¤ì´ë²„ ì¦ê¶Œ"/>
+<meta property="og:article:author" content="³×ÀÌ¹ö Áõ±Ç"/>
 <meta property="og:article:author:url" content="http://FINANCE.NAVER.COM"/>
 
 
@@ -113,7 +113,7 @@ function select_chart(pst)
       })();
 </script>
 	
-	<!-- smart channel ê´‘ê³  -->
+	<!-- smart channel ±¤°í -->
 	<script async src="https://ssl.pstatic.net/tveta/libs/glad/prod/gfp-core.js">
 		</script>
 	<script type="text/javascript">
@@ -150,7 +150,7 @@ function select_chart(pst)
 							//console.log(gladsdk.event.AD_IMPRESSED);
 						});
 						gladsdk.addEventListener(gladsdk.event.ERROR, function(ad, error) {
-							//TODO: ì˜¤ë¥˜ ë¡œê¹…ì²˜ë¦¬
+							//TODO: ¿À·ù ·Î±ëÃ³¸®
 							//console.log(gladsdk.event.ERROR);
 						});
 					});
@@ -218,9 +218,9 @@ var ccsrv="cc.naver.com";
 	
 
 
-var gnb_logout=document.URL; //GNBì—ì„œ ë¡œê·¸ì•„ì›ƒ í›„ redirect ë  URL
-var gnb_searchbox='off'; //ë¯¸ë‹ˆ ê²€ìƒ‰ì°½ì„ on í• ì§€ off í• ì§€. defaultëŠ” off
-var gnb_shortnick='off'; //ë‹‰ë„¤ì„ ë§ì¤„ì„(10ì)ì„ oní• ì§€ off í• ì§€. defaultëŠ” off.
+var gnb_logout=document.URL; //GNB¿¡¼­ ·Î±×¾Æ¿ô ÈÄ redirect µÉ URL
+var gnb_searchbox='off'; //¹Ì´Ï °Ë»öÃ¢À» on ÇÒÁö off ÇÒÁö. default´Â off
+var gnb_shortnick='off'; //´Ğ³×ÀÓ ¸»ÁÙÀÓ(10ÀÚ)À» onÇÒÁö off ÇÒÁö. default´Â off.
 
 
 var gnb_naverme_layer_open_callback = function(){
@@ -239,11 +239,11 @@ var gnb_naverme_layer_close_callback = function(){
 
 
 <div id="u_skip">
-	<a href="#menu" tabindex="1"><span>ë©”ì¸ ë©”ë‰´ë¡œ ë°”ë¡œê°€ê¸°</span></a>
+	<a href="#menu" tabindex="1"><span>¸ŞÀÎ ¸Ş´º·Î ¹Ù·Î°¡±â</span></a>
 
 	
 	
-		<a href="#start" tabindex="2"><span>ë³¸ë¬¸ìœ¼ë¡œ ë°”ë¡œê°€ê¸°</span></a>
+		<a href="#start" tabindex="2"><span>º»¹®À¸·Î ¹Ù·Î°¡±â</span></a>
 	
 
 </div>
@@ -273,19 +273,19 @@ var gnb_naverme_layer_close_callback = function(){
 			</div>
 
 			<div class="sta">
-				<h1 class="logo"> <a href="https://www.naver.com/" class="logo_naver" onClick="clickcr(this, 'STA.naver', '', '', event);"><span class="blind">ë„¤ì´ë²„</span></a>
-				<a href="/" class="logo_service" onClick="clickcr(this, 'STA.finance', '', '', event);"><span class="blind">ì¦ê¶Œ</span></a> </h1>
+				<h1 class="logo"> <a href="https://www.naver.com/" class="logo_naver" onClick="clickcr(this, 'STA.naver', '', '', event);"><span class="blind">³×ÀÌ¹ö</span></a>
+				<a href="/" class="logo_service" onClick="clickcr(this, 'STA.finance', '', '', event);"><span class="blind">Áõ±Ç</span></a> </h1>
 				<form name="search" action="/search/search.naver"  method="get"
 					onsubmit="return delayed_submit(this)" style="margin:0; padding:0;">
 				<fieldset>
-					<legend>ê²€ìƒ‰</legend>
+					<legend>°Ë»ö</legend>
 					<div class="snb_search_box">
 						<div class="snb_search_box_sub">
-							<input id="stock_items" type="text" title="ê²€ìƒ‰" name="query" value="ì¢…ëª©ëª…&middot;ì§€ìˆ˜ëª… ì…ë ¥" accesskey="s" class="snb_search_text snb_default" autocomplete="off">
-							<a id="nautocomplete" href="#" onclick="return false" class="btn_arrow"><span class="blind">ìë™ì™„ì„± í¼ì¹˜ê¸°</span></a>
+							<input id="stock_items" type="text" title="°Ë»ö" name="query" value="Á¾¸ñ¸í&middot;Áö¼ö¸í ÀÔ·Â" accesskey="s" class="snb_search_text snb_default" autocomplete="off">
+							<a id="nautocomplete" href="#" onclick="return false" class="btn_arrow"><span class="blind">ÀÚµ¿¿Ï¼º ÆîÄ¡±â</span></a>
 						</div>
 						<div class="auto_area">
-							<h2 class="blind">ìë™ì™„ì„±</h2>
+							<h2 class="blind">ÀÚµ¿¿Ï¼º</h2>
 							<div id="autoFrame" style="display: none;">
 								<div class="wrap" id="atcmp" style="display:none;">
 									<div class="wrap_in">
@@ -306,41 +306,41 @@ var gnb_naverme_layer_close_callback = function(){
 											</ul>
 										</div>
 										<p class="func">
-											<span><a href="#" class="fire_event funoff" onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;" >ê¸°ëŠ¥ë„ê¸°</a></span>
+											<span><a href="#" class="fire_event funoff" onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;" >±â´É²ô±â</a></span>
 										</p>
 									</div>
 								</div>
-								<!-- í˜„ì¬ ìë™ì™„ì„± ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤ -->
+								<!-- ÇöÀç ÀÚµ¿¿Ï¼º ±â´ÉÀ» »ç¿ëÇÏ°í °è½Ê´Ï´Ù -->
 								<div class="wrap" id="atcmpIng" style="display:none;">
 									<div class="wrap_in">
 										<div class="words">
 											<p class="msg">
-												í˜„ì¬ ìë™ì™„ì„± ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤.
+												ÇöÀç ÀÚµ¿¿Ï¼º ±â´ÉÀ» »ç¿ëÇÏ°í °è½Ê´Ï´Ù.
 											</p>
 										</div>
 										<p class="func">
-											<span><a href="#" class="fire_event funoff" onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;">ê¸°ëŠ¥ë„ê¸°</a></span>
+											<span><a href="#" class="fire_event funoff" onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;">±â´É²ô±â</a></span>
 										</p>
 									</div>
 								</div>
-								<!--// í˜„ì¬ ìë™ì™„ì„± ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê³  ê³„ì‹­ë‹ˆë‹¤ -->
-								<!-- ìë™ì™„ì„± ê¸°ëŠ¥ì´ í™œì„±í™” -->
+								<!--// ÇöÀç ÀÚµ¿¿Ï¼º ±â´ÉÀ» »ç¿ëÇÏ°í °è½Ê´Ï´Ù -->
+								<!-- ÀÚµ¿¿Ï¼º ±â´ÉÀÌ È°¼ºÈ­ -->
 								<div class="wrap" id="atcmpStart" style="display:none;">
 									<div class="wrap_in">
 										<div class="words">
 											<p class="msg">
-												ìë™ì™„ì„± ê¸°ëŠ¥ì´ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤.
+												ÀÚµ¿¿Ï¼º ±â´ÉÀÌ È°¼ºÈ­µÇ¾ú½À´Ï´Ù.
 											</p>
 										</div>
 										<p class="func">
-											<span><a href="#" class="fire_event funoff"  onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;">ê¸°ëŠ¥ë„ê¸°</a></span>
+											<span><a href="#" class="fire_event funoff"  onclick="clickcr(this, 'AUT.x', '', '', event); smartSearch.unuse(); return false;">±â´É²ô±â</a></span>
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="snb_search_btn" onclick="clickcr(this, 'STA.search', '', '', event);" alt="ê²€ìƒ‰"><span class="blind">ê²€ìƒ‰</span></button>
-						<a href="#" target="_blank" class="snb_search_btn-total" onclick="itegrationSearch();clickcr(this, 'STA.nx', '', '', event);return false;">í†µí•©ê²€ìƒ‰</a>
+						<button type="submit" class="snb_search_btn" onclick="clickcr(this, 'STA.search', '', '', event);" alt="°Ë»ö"><span class="blind">°Ë»ö</span></button>
+						<a href="#" target="_blank" class="snb_search_btn-total" onclick="itegrationSearch();clickcr(this, 'STA.nx', '', '', event);return false;">ÅëÇÕ°Ë»ö</a>
 					</div>
 				</fieldset>
 				</form>
@@ -351,12 +351,12 @@ var gnb_naverme_layer_close_callback = function(){
 		<div class="lnb_inner">
 			<div id="menu">
 				<ul class="menu">
-					<li class="m1 first "><a href="/" onClick="clickcr(this, 'LNB.home', '', '', event);"><span class="tx">ì¦ê¶Œ í™ˆ</span></a></li>
-					<li class="m2 "><a href="/sise/" onClick="clickcr(this, 'LNB.sise', '', '', event);"><span class="tx">êµ­ë‚´ì¦ì‹œ</span></a></li>
-					<li class="m3 on"><a href="/world/" onClick="clickcr(this, 'LNB.world', '', '', event);"><span class="tx">í•´ì™¸ì¦ì‹œ</span></a></li>
-					<li class="m4 "><a href="/marketindex/" onClick="clickcr(this, 'LNB.market', '', '', event);"><span class="tx">ì‹œì¥ì§€í‘œ</span></a></li>
-					<li class="m6 "><a href="/research/" onClick="clickcr(this, 'LNB.research', '', '', event);"><span class="tx">ë¦¬ì„œì¹˜</span></a></li>
-					<li class="m7 "><a href="/news/"><span class="tx">ë‰´ìŠ¤</span></a></li>
+					<li class="m1 first "><a href="/" onClick="clickcr(this, 'LNB.home', '', '', event);"><span class="tx">Áõ±Ç È¨</span></a></li>
+					<li class="m2 "><a href="/sise/" onClick="clickcr(this, 'LNB.sise', '', '', event);"><span class="tx">±¹³»Áõ½Ã</span></a></li>
+					<li class="m3 on"><a href="/world/" onClick="clickcr(this, 'LNB.world', '', '', event);"><span class="tx">ÇØ¿ÜÁõ½Ã</span></a></li>
+					<li class="m4 "><a href="/marketindex/" onClick="clickcr(this, 'LNB.market', '', '', event);"><span class="tx">½ÃÀåÁöÇ¥</span></a></li>
+					<li class="m6 "><a href="/research/" onClick="clickcr(this, 'LNB.research', '', '', event);"><span class="tx">¸®¼­Ä¡</span></a></li>
+					<li class="m7 "><a href="/news/"><span class="tx">´º½º</span></a></li>
 					<li class="m8 "><a href="/mystock/" onClick="clickcr(this, 'LNB.mystock', '', '', event);"><span class="tx">MY</span></a></li>
 				</ul>
 			</div>
@@ -378,7 +378,7 @@ var gnb_naverme_layer_close_callback = function(){
 		}
 
 		window.onload=function(){
-			// í•´ì™¸ì¦ì‹œí™ˆ, í•´ì™¸ì¦ì‹œë‰´ìŠ¤ëŠ” mouseover ì´ë²¤íŠ¸ê°€ ë°œìƒí•˜ë©´ ì•ˆëœë‹¤.
+			// ÇØ¿ÜÁõ½ÃÈ¨, ÇØ¿ÜÁõ½Ã´º½º´Â mouseover ÀÌº¥Æ®°¡ ¹ß»ıÇÏ¸é ¾ÈµÈ´Ù.
 			var liMenuElement = jindo.$A(jindo.$$('ul.lnb2 li')).slice(2, 6);
 			var liMenuElementValue = liMenuElement.$value();
 			jindo.$Fn(function(e){overSubmenu(e);}).attach(liMenuElementValue,'mouseover');
@@ -390,7 +390,7 @@ var gnb_naverme_layer_close_callback = function(){
 
 	
 	<script type="text/JavaScript">
-		/* lcs ì§‘ê³„ */
+		/* lcs Áı°è */
         ;(function(){
             var eventType = "onpageshow" in window ? "pageshow" : "load";
             jindo.$Fn(function(){
@@ -398,8 +398,8 @@ var gnb_naverme_layer_close_callback = function(){
             }).attach(window, eventType);
         })();
 
-		/* ê²€ìƒ‰ ìë™ì™„ì„± [ ì¸ì1 : ê²€ìƒ‰inputì˜ ID, ì¸ì2 : iframe íƒœê·¸ ID ]   */
-		// AutoComplete ìƒì„±
+		/* °Ë»ö ÀÚµ¿¿Ï¼º [ ÀÎÀÚ1 : °Ë»öinputÀÇ ID, ÀÎÀÚ2 : iframe ÅÂ±× ID ]   */
+		// AutoComplete »ı¼º
 		var acDomain = "ac.finance.naver.com";
         if (location.hostname.indexOf("staging-") > -1) {
             acDomain = "staging-" + acDomain;
@@ -410,16 +410,16 @@ var gnb_naverme_layer_close_callback = function(){
         var acUrl = "https://" + acDomain + "/ac";
 
 		smartSearch = new nhn.Autocomplete(
-			// InputManager ìƒì„±
+			// InputManager »ı¼º
 			new nhn.AcInputManager(jindo.$("stock_items")),
-			// DataManager ìƒì„±
+			// DataManager »ı¼º
 			new nhn.AcDataManager(acUrl, "jsonp", "get", {
                     st: "111",
                     r_lt : "111",
                     q_enc : "euc-kr",
                     r_enc : "euc-kr",
                     frm: "stock"}),
-			// ViewManager ìƒì„±
+			// ViewManager »ı¼º
 			new nhn.AcStockViewManager(jindo.$("autoFrame"), jindo.$("nautocomplete"), {
                                         strMax: 200,
                                         listMax: [7, 2, 2],
@@ -440,15 +440,15 @@ var gnb_naverme_layer_close_callback = function(){
 	            }
 	        });
 
-		/* í†µí•©ê²€ìƒ‰  start ----->  */
+		/* ÅëÇÕ°Ë»ö  start ----->  */
 		//document.domain = 'naver.com';
-		var sSearchHintText = 'ì¢…ëª©ëª…Â·ì§€ìˆ˜ëª…Â·í™˜ìœ¨ëª…Â·ì›ìì¬ëª… ì…ë ¥';
+		var sSearchHintText = 'Á¾¸ñ¸í¡¤Áö¼ö¸í¡¤È¯À²¸í¡¤¿øÀÚÀç¸í ÀÔ·Â';
 		function itegrationSearch() {
 			var query = jindo.$('stock_items').value;
 
 			if ( query == ''  || encodeURIComponent(query) == encodeURIComponent(sSearchHintText))
 			{
-				alert ( 'ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.' );
+				alert ( '°Ë»ö¾î¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.' );
 				return;
 			}
 
@@ -474,14 +474,14 @@ var gnb_naverme_layer_close_callback = function(){
 
 			if ( query == '' || query == sSearchHintText.replace(/^\s*/,'').replace(/\s*$/,''))
 			{
-				alert ( 'ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.' );
+				alert ( '°Ë»ö¾î¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.' );
 				return;
 			}
 			else {
 				object.submit();
 			}
 		}
-		/* <---------- í†µí•©ê²€ìƒ‰  end */
+		/* <---------- ÅëÇÕ°Ë»ö  end */
 
 		function popup()
 		{
@@ -490,7 +490,7 @@ var gnb_naverme_layer_close_callback = function(){
 		}
 	</script>
 
-	<iframe id="me_layers" name="test" title="ë„¤ì´ë²„ë¯¸ ì˜ì—­" width="0" height="0" scrolling="no" frameborder="0" style="display:block;top: 22px; right: 209px; position: absolute; z-index: 15;"></iframe>
+	<iframe id="me_layers" name="test" title="³×ÀÌ¹ö¹Ì ¿µ¿ª" width="0" height="0" scrolling="no" frameborder="0" style="display:block;top: 22px; right: 209px; position: absolute; z-index: 15;"></iframe>
 </div>
 <div id="wrap"  >
 	
@@ -508,24 +508,24 @@ var gnb_naverme_layer_close_callback = function(){
 	
 
 <!-- //  global include -->
-	<!-- [D] ì´ ë¼ì¸ë¶€í„° Footer ì „ê¹Œì§€ëŠ” ì „ë¶€ ìƒˆë¡œ ë§ˆí¬ì—…ëœ ì˜ì—­ì…ë‹ˆë‹¤. ê¸°ì¡´ ë ˆì´ì•„ì›ƒì„ ê±·ì–´ë‚´ ì£¼ì„¸ìš”.
-		class="ì„¹ì…˜ê³ ìœ ë„¤ì´ë°" ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
-		(í•´ì™¸ì¦ì‹œ ì„¹ì…˜ > end í˜ì´ì§€ : section_world section_world_end)
-		ë‹¤ìŒ ë§ˆí¬ì—…ë‹´ë‹¹ìë‹˜ : ê¸°ì¡´ finance.css ì—ì„œ #container ë¥¼ ì‚¬ìš©í•˜ê³  ìˆê¸° ë•Œë¬¸ì—, ì‚¬ì´ë“œì´í™íŠ¸ë¥¼ ê³ ë ¤í•´ì„œ id="container" ë¥¼ ì œì™¸í–ˆìŠµë‹ˆë‹¤ -->
+	<!-- [D] ÀÌ ¶óÀÎºÎÅÍ Footer Àü±îÁö´Â ÀüºÎ »õ·Î ¸¶Å©¾÷µÈ ¿µ¿ªÀÔ´Ï´Ù. ±âÁ¸ ·¹ÀÌ¾Æ¿ôÀ» °È¾î³» ÁÖ¼¼¿ä.
+		class="¼½¼Ç°íÀ¯³×ÀÌ¹Ö" À» Ãß°¡ÇÕ´Ï´Ù.
+		(ÇØ¿ÜÁõ½Ã ¼½¼Ç > end ÆäÀÌÁö : section_world section_world_end)
+		´ÙÀ½ ¸¶Å©¾÷´ã´çÀÚ´Ô : ±âÁ¸ finance.css ¿¡¼­ #container ¸¦ »ç¿ëÇÏ°í ÀÖ±â ¶§¹®¿¡, »çÀÌµåÀÌÆåÆ®¸¦ °í·ÁÇØ¼­ id="container" ¸¦ Á¦¿ÜÇß½À´Ï´Ù -->
 	<div class="section_world section_world_end">
-		<!-- ìƒë‹¨ ì œëª©ì˜ì—­ -->
+		<!-- »ó´Ü Á¦¸ñ¿µ¿ª -->
 
 		<div class="group_h">
 			<div class="h_area">
-				<h2>ìƒí•´ì¢…í•©</h2>
+				<h2>»óÇØÁ¾ÇÕ</h2>
 				<em class="quot">SHS@000001</em>
-				<span class="state">ì¤‘êµ­</span>
-				<span class="date"><em>2023.08.24 11:30</em> 
-				í˜„ì§€ì‹œê°„ ê¸°ì¤€
-				<span>|</span>15ë¶„ ì§€ì—°ì œê³µ </span>
+				<span class="state">Áß±¹</span>
+				<span class="date"><em>2023.08.24 15:00</em> 
+				ÇöÁö½Ã°£ ±âÁØ
+				<span>|</span>15ºĞ Áö¿¬Á¦°ø </span>
 			</div>
 		</div>
-		<!-- //ìƒë‹¨ ì œëª©ì˜ì—­ -->
+		<!-- //»ó´Ü Á¦¸ñ¿µ¿ª -->
 		<div id="content">
 				
 			
@@ -535,43 +535,43 @@ var gnb_naverme_layer_close_callback = function(){
 			
 			
 		
-			<!-- í˜„ì¬ ì‹œì„¸ -->
-			<!-- [D] í€ë“œ end ì™€ ë™ì¼í•œ êµ¬ì¡°ì…ë‹ˆë‹¤ -->
+			<!-- ÇöÀç ½Ã¼¼ -->
+			<!-- [D] Æİµå end ¿Í µ¿ÀÏÇÑ ±¸Á¶ÀÔ´Ï´Ù -->
 			<div class="rate_info">
 				<div class="today">
 					<p class="no_today">
 						<em class="no_up">
 							
 							
-							<span class="no3">3</span><span class="shim">,</span><span class="no0">0</span><span class="no9">9</span><span class="no2">2</span><span class="jum">.</span><span class="no8">8</span><span class="no8">8</span>
+							<span class="no3">3</span><span class="shim">,</span><span class="no0">0</span><span class="no8">8</span><span class="no2">2</span><span class="jum">.</span><span class="no2">2</span><span class="no4">4</span>
 						</em>
 					</p>
 					<p class="no_exday">
-						<span class="txt_comparison">ì „ì¼ëŒ€ë¹„</span>
+						<span class="txt_comparison">ÀüÀÏ´ëºñ</span>
 						<em class="no_up"">
 							<span class="ico up"></span>
 							
 							
-							<span class="no1">1</span><span class="no4">4</span><span class="jum">.</span><span class="no4">4</span><span class="no8">8</span>
+							<span class="no3">3</span><span class="jum">.</span><span class="no8">8</span><span class="no4">4</span>
 
 						</em>
 						<em class="no_up">
 							<span class="parenthesis1">(</span><span class="ico plus">+</span>
 							
 							
-							<span class="no0">0</span><span class="jum">.</span><span class="no4">4</span><span class="no7">7</span><span class="per">%</span>
+							<span class="no0">0</span><span class="jum">.</span><span class="no1">1</span><span class="no2">2</span><span class="per">%</span>
 							<span class="parenthesis2">)</span>
 
 						</em>
 					</p>
 				</div>
-				<table summary="ì£¼ìš” ì‹œì„¸(ì „ì¼ì¢…ê°€, ì‹œê³ ì €ê°€, ê±°ë˜ëŸ‰, ê±°ë˜ëŒ€ê¸ˆ)ì„ ì œê³µí•©ë‹ˆë‹¤." class="no_info">
-				<caption>ì£¼ìš” ì‹œì„¸</caption>
+				<table summary="ÁÖ¿ä ½Ã¼¼(ÀüÀÏÁ¾°¡, ½Ã°íÀú°¡, °Å·¡·®, °Å·¡´ë±İ)À» Á¦°øÇÕ´Ï´Ù." class="no_info">
+				<caption>ÁÖ¿ä ½Ã¼¼</caption>
 				<colgroup><col width="150"><col><col width="154"></colgroup>
 				<tbody>
 				<tr>
 				<td>
-					<span class="detail detail7">ì „ì¼</span>
+					<span class="detail detail7">ÀüÀÏ</span>
 					
 					<em>
 						
@@ -587,14 +587,14 @@ var gnb_naverme_layer_close_callback = function(){
 						
 						
 					
-					<span class="detail detail8">ê³ ê°€</span>
+					<span class="detail detail8">°í°¡</span>
 					<em class="no_up">
 						
-						<span class="no3">3</span><span class="shim">,</span><span class="no0">0</span><span class="no9">9</span><span class="no4">4</span><span class="jum">.</span><span class="no6">6</span><span class="no2">2</span>
+						<span class="no3">3</span><span class="shim">,</span><span class="no1">1</span><span class="no0">0</span><span class="no6">6</span><span class="jum">.</span><span class="no1">1</span><span class="no8">8</span>
 					</em>
 				</td>
 				<td>
-					<span class="detail detail9">52ì£¼ ìµœê³ </span>
+					<span class="detail detail9">52ÁÖ ÃÖ°í</span>
 					<em>
 						
 						<span class="no3">3</span><span class="shim">,</span><span class="no4">4</span><span class="no1">1</span><span class="no8">8</span><span class="jum">.</span><span class="no9">9</span><span class="no5">5</span>
@@ -611,7 +611,7 @@ var gnb_naverme_layer_close_callback = function(){
 						
 						
 					
-					<span class="detail detail10">ì‹œê°€</span>
+					<span class="detail detail10">½Ã°¡</span>
 					<em class="no_up">
 						
 						<span class="no3">3</span><span class="shim">,</span><span class="no0">0</span><span class="no8">8</span><span class="no5">5</span><span class="jum">.</span><span class="no9">9</span><span class="no1">1</span>
@@ -625,14 +625,14 @@ var gnb_naverme_layer_close_callback = function(){
 						
 						
 					
-					<span class="detail detail11">ì €ê°€</span>
+					<span class="detail detail11">Àú°¡</span>
 					<em class="no_down">
 						
 						<span class="no3">3</span><span class="shim">,</span><span class="no0">0</span><span class="no7">7</span><span class="no2">2</span><span class="jum">.</span><span class="no9">9</span><span class="no5">5</span>
 					</em>
 				</td>
 				<td>
-					<span class="detail detail12">52ì£¼ ìµœì €</span>
+					<span class="detail detail12">52ÁÖ ÃÖÀú</span>
 					<em>
 						
 						<span class="no2">2</span><span class="shim">,</span><span class="no8">8</span><span class="no8">8</span><span class="no5">5</span><span class="jum">.</span><span class="no0">0</span><span class="no9">9</span>
@@ -642,89 +642,89 @@ var gnb_naverme_layer_close_callback = function(){
 				</tbody>
 				</table>
 				
-				<!-- ë¯¸ë‹ˆ ì¼ì°¨íŠ¸ -->
+				<!-- ¹Ì´Ï ÀÏÂ÷Æ® -->
 				<div class="aside_section">
 					
 					<!-- [D] 130x53 -->
-					<img src="https://ssl.pstatic.net/imgfinance/chart/mobile/world/mini/SHS@000001.png?sidcode=1365666030675" class="img_graph" title="ë¯¸ë‹ˆ ì¼ì°¨íŠ¸">
+					<img src="https://ssl.pstatic.net/imgfinance/chart/mobile/world/mini/SHS@000001.png?sidcode=1365666030675" class="img_graph" title="¹Ì´Ï ÀÏÂ÷Æ®">
 					
 				</div>
-				<!-- //ë¯¸ë‹ˆ ì¼ì°¨íŠ¸ -->
+				<!-- //¹Ì´Ï ÀÏÂ÷Æ® -->
 			</div>
-			<!-- ì°¨íŠ¸ ì»¨íŠ¸ë¡¤ ì˜ì—­ -->
+			<!-- Â÷Æ® ÄÁÆ®·Ñ ¿µ¿ª -->
 			<div class="chart_control_area">
 				<dl class="line">
 
-				<dt>ì„ ì°¨íŠ¸</dt>
+				<dt>¼±Â÷Æ®</dt>
 				<dd>
 					<ul>
-					<li class="month3"><a href="#" class="on" onclick="showChart('month3');">3ê°œì›”</a></li>
-					<li class="year"><a href="#" onclick="showChart('year');">1ë…„</a></li>
-					<li class="year3"><a href="#" onclick="showChart('year3');">3ë…„</a></li>
-					<li class="year5"><a href="#" onclick="showChart('year5');">5ë…„</a></li>
-					<li class="year10"><a href="#" onclick="showChart('year10');">10ë…„</a></li>
+					<li class="month3"><a href="#" class="on" onclick="showChart('month3');">3°³¿ù</a></li>
+					<li class="year"><a href="#" onclick="showChart('year');">1³â</a></li>
+					<li class="year3"><a href="#" onclick="showChart('year3');">3³â</a></li>
+					<li class="year5"><a href="#" onclick="showChart('year5');">5³â</a></li>
+					<li class="year10"><a href="#" onclick="showChart('year10');">10³â</a></li>
 					</ul>
 				</dd>
 				</dl>
 				<dl class="bar">
-				<dt>ë´‰ì°¨íŠ¸</dt>
+				<dt>ºÀÂ÷Æ®</dt>
 				<dd>
 					<ul>
-					<li class="day"><a href="#" onclick="showBarChart('day');">ì¼ë´‰</a></li>
-					<li class="week"><a href="#" onclick="showBarChart('week');">ì£¼ë´‰</a></li>
-					<li class="month"><a href="#" onclick="showBarChart('month');">ì›”ë´‰</a></li>
+					<li class="day"><a href="#" onclick="showBarChart('day');">ÀÏºÀ</a></li>
+					<li class="week"><a href="#" onclick="showBarChart('week');">ÁÖºÀ</a></li>
+					<li class="month"><a href="#" onclick="showBarChart('month');">¿ùºÀ</a></li>
 					</ul>
 
 				</dd>
 				</dl>
 			</div>
-			<!-- //ì°¨íŠ¸ ì»¨íŠ¸ë¡¤ ì˜ì—­ -->
-			<!-- ì°¨íŠ¸ -->
+			<!-- //Â÷Æ® ÄÁÆ®·Ñ ¿µ¿ª -->
+			<!-- Â÷Æ® -->
 			<div class="flash_area">
-				<img src="https://ssl.pstatic.net/imgfinance/chart/world/month3/SHS@000001.png?1692851097602" width="700" alt="ì°¨íŠ¸" onerror="this.src='https://ssl.pstatic.net/imgstock/chart3/world2008/error_700x243.gif'" />
+				<img src="https://ssl.pstatic.net/imgfinance/chart/world/month3/SHS@000001.png?1692866481513" width="700" alt="Â÷Æ®" onerror="this.src='https://ssl.pstatic.net/imgstock/chart3/world2008/error_700x243.gif'" />
 			</div>
-			<!-- //ì°¨íŠ¸ -->
+			<!-- //Â÷Æ® -->
 
-			<!-- //í˜„ì¬ ì‹œì„¸ -->
-			<!-- ì¼ë³„,ì‹œê°„ë³„ì‹œì„¸ -->
+			<!-- //ÇöÀç ½Ã¼¼ -->
+			<!-- ÀÏº°,½Ã°£º°½Ã¼¼ -->
 			<div class="section_quot">
-				<h3 class="h_sise_day">ì¼ë³„ì‹œì„¸</h3>
-				<!-- [D] ì¼ë³„ì‹œì„¸ : ë§ˆì§€ë§‰ tr ì— .last ì¶”ê°€ -->
-				<table sumary="ì¼ë³„ì‹œì„¸ ë¦¬ìŠ¤íŠ¸" cellpadding="0" cellspacing="0" class="tb_status2 tb_status2_t2" id="dayTable">
-				<caption>ì¼ë³„ì‹œì„¸</caption>
+				<h3 class="h_sise_day">ÀÏº°½Ã¼¼</h3>
+				<!-- [D] ÀÏº°½Ã¼¼ : ¸¶Áö¸· tr ¿¡ .last Ãß°¡ -->
+				<table sumary="ÀÏº°½Ã¼¼ ¸®½ºÆ®" cellpadding="0" cellspacing="0" class="tb_status2 tb_status2_t2" id="dayTable">
+				<caption>ÀÏº°½Ã¼¼</caption>
 
 				<col width="87"><col width="124"><col width="118"><col width="124"><col width="124"><col width="124">
 				<thead>
 				<tr>
-				<th scope="col" class="tb_td"><span class="blind">ì¼ì</span></th>
-				<th scope="col" class="tb_td2"><span class="blind">ì¢…ê°€</span></th>
-				<th scope="col" class="tb_td3"><span class="blind">ì „ì¼ëŒ€ë¹„</span></th>
-				<th scope="col" class="tb_td4"><span class="blind">ì‹œê°€</span></th>
+				<th scope="col" class="tb_td"><span class="blind">ÀÏÀÚ</span></th>
+				<th scope="col" class="tb_td2"><span class="blind">Á¾°¡</span></th>
+				<th scope="col" class="tb_td3"><span class="blind">ÀüÀÏ´ëºñ</span></th>
+				<th scope="col" class="tb_td4"><span class="blind">½Ã°¡</span></th>
 
-				<th scope="col" class="tb_td5"><span class="blind">ê³ ê°€</span></th>
-				<th scope="col" class="tb_td6"><span class="blind">ì €ê°€</span></th>
+				<th scope="col" class="tb_td5"><span class="blind">°í°¡</span></th>
+				<th scope="col" class="tb_td6"><span class="blind">Àú°¡</span></th>
 				</tr>
 				</thead>
 				<tbody>
-				<!-- ì¢…ê°€ë°ì´í„°ê°€ ì•ˆë“¤ì–´ì™”ì„ì‹œ ì²˜ë¦¬ -->
+				<!-- Á¾°¡µ¥ÀÌÅÍ°¡ ¾Èµé¾î¿ÔÀ»½Ã Ã³¸® -->
 				
 				
-							
-						
-						
-							
-						
 						
 					
-					<tr class="point_up">
-	
-					<td class="tb_td">2023.08.24</td>
-					<td class="tb_td2"><span>3,092.88</span></td>
-					<td class="tb_td3"><span class="point_status">14.48</span></td>
-					<td class="tb_td4"><span>3,085.91</span></td>
-					<td class="tb_td5"><span>3,094.62</span></td>
-					<td class="tb_td6"><span>3,072.95</span></td>
+					
+						
+					
+					
 				
+				<tr class="point_up ">
+
+				<td class="tb_td">2023.08.24</td>
+				<td class="tb_td2"><span>3,082.24</span></td>
+				<td class="tb_td3"><span class="point_status">3.84</span></td>
+				<td class="tb_td4"><span>3,085.91</span></td>
+				<td class="tb_td5"><span>3,106.18</span></td>
+				<td class="tb_td6"><span>3,072.95</span></td>
+				</tr>
 				
 						
 					
@@ -905,34 +905,34 @@ var gnb_naverme_layer_close_callback = function(){
 						<a href="#" id="dayLink10"  onClick="moveDayPaging(10, false, event); return false">10</a>
 					
 					
-					 <a href="#" class="next" onClick="moveDayPaging(11, true, event); return false">ë‹¤ìŒ <img src="https://ssl.pstatic.net/static/nfinance/bu_pgarR.gif" width="3" height="5" alt="ë‹¤ìŒ"></a>
+					 <a href="#" class="next" onClick="moveDayPaging(11, true, event); return false">´ÙÀ½ <img src="https://ssl.pstatic.net/static/nfinance/bu_pgarR.gif" width="3" height="5" alt="´ÙÀ½"></a>
 					
 				</div>
 			</div>
-			<!-- //ì¼ë³„,ì‹œê°„ë³„ì‹œì„¸ -->
+			<!-- //ÀÏº°,½Ã°£º°½Ã¼¼ -->
 		</div>
-		<!-- [D] ë¯¸ë‹ˆ ì¼ì°¨íŠ¸ê°€ ìˆì„ ê²½ìš° ì•„ë˜ì™€ ê°™ì´ style ì¶”ê°€ -->
+		<!-- [D] ¹Ì´Ï ÀÏÂ÷Æ®°¡ ÀÖÀ» °æ¿ì ¾Æ·¡¿Í °°ÀÌ style Ãß°¡ -->
 		<div id="world_end" class="aside" style="padding-top:99px">
 			<div class="aside_world_end">
-				<h3 class="h_info_relative"><span>ê´€ë ¨ì •ë³´</span></h3>
+				<h3 class="h_info_relative"><span>°ü·ÃÁ¤º¸</span></h3>
 				<dl class="info_aside">
 				
 				
-				<!-- ì¢…ëª©ì˜ ê²½ìš°ì—ë§Œ í¸ì…ì§€ìˆ˜ë¥¼ ë³´ì—¬ì¤€ë‹¤. -->
+				<!-- Á¾¸ñÀÇ °æ¿ì¿¡¸¸ ÆíÀÔÁö¼ö¸¦ º¸¿©ÁØ´Ù. -->
 				
 	
 				
-				<dt class="dt5"><span class="blind">ê±°ë˜ì†Œ</span></dt>
+				<dt class="dt5"><span class="blind">°Å·¡¼Ò</span></dt>
 				<dd><span>Shanghai Stock Exchange</span></dd>
-				<dt class="dt7"><span class="blind">ê¸°ì¤€í†µí™”</span></dt>
+				<dt class="dt7"><span class="blind">±âÁØÅëÈ­</span></dt>
 				<dd><span>CNY</span></dd>
-				<dt class="dt6"><span class="blind">ê±°ë˜ì‹œê°„(í•œêµ­ì‹œê°„ ê¸°ì¤€)</span></dt>
+				<dt class="dt6"><span class="blind">°Å·¡½Ã°£(ÇÑ±¹½Ã°£ ±âÁØ)</span></dt>
 				<dd><span>10:30~12:30, 14:00~16:00<br></span></dd>
 				
 				
 				 
-				<dt class="dt8"><span class="blind">ì§€ìˆ˜ ì„¤ëª…</span></dt>
-				<dd class="dd3">ìƒí•´ì¦ê¶Œê±°ë˜ì†Œ(SSE)ì— ìƒì¥ë˜ì–´ ìˆëŠ” ëª¨ë“  ì¢…ëª©ìœ¼ë¡œ êµ¬ì„±ëœ ì£¼ê°€ ì§€ìˆ˜<br></dd>
+				<dt class="dt8"><span class="blind">Áö¼ö ¼³¸í</span></dt>
+				<dd class="dd3">»óÇØÁõ±Ç°Å·¡¼Ò(SSE)¿¡ »óÀåµÇ¾î ÀÖ´Â ¸ğµç Á¾¸ñÀ¸·Î ±¸¼ºµÈ ÁÖ°¡ Áö¼ö<br></dd>
 				
 				</dl>
 			</div>
@@ -953,8 +953,8 @@ function fnShowOff(offId){
 	
 
 	
-	<!-- Type3 [í•´ì™¸ì¦ì‹œ ì¢…ëª©í˜ì´ì§€] -->
-		<!-- ìµœê·¼ì¡°íšŒì¢…ëª© -->
+	<!-- Type3 [ÇØ¿ÜÁõ½Ã Á¾¸ñÆäÀÌÁö] -->
+		<!-- ÃÖ±ÙÁ¶È¸Á¾¸ñ -->
 		<script type="text/javascript" src="https://ssl.pstatic.net/imgstock/static.pc/20230808201105/js/util.js"></script>
 <script type="text/javascript" src="https://ssl.pstatic.net/imgstock/static.pc/20230808201105/js/myStock.js"></script>
 
@@ -966,11 +966,11 @@ function fnShowOff(offId){
 
 <div class="section_aside">
 	<div class="tab_search search3">
-		<a href="#" onclick="clickcr(this, 'rch.1', '', '', event); return false;"><span>ìµœê·¼ì¡°íšŒ</span></a>
+		<a href="#" onclick="clickcr(this, 'rch.1', '', '', event); return false;"><span>ÃÖ±ÙÁ¶È¸</span></a>
 		<a href="#" onclick="clickcr(this, 'rch.3', '', '', event); return false;"><span>MY STOCK</span></a>
 	</div>
-	<table class="tbl_search" summary="ìµœê·¼ì¡°íšŒ ë¦¬ìŠ¤íŠ¸">
-		<caption>ìµœê·¼ì¡°íšŒ</caption>
+	<table class="tbl_search" summary="ÃÖ±ÙÁ¶È¸ ¸®½ºÆ®">
+		<caption>ÃÖ±ÙÁ¶È¸</caption>
 		<colgroup>
 			<col width="65">
 			<col width="55">
@@ -978,9 +978,9 @@ function fnShowOff(offId){
 		</colgroup>
 		<thead>
 		<tr>
-			<th>ì—…ì²´ëª…</th>
-			<th>ê±°ë˜ëŸ‰</th>
-			<th>ì „ì¼ë¹„</th>
+			<th>¾÷Ã¼¸í</th>
+			<th>°Å·¡·®</th>
+			<th>ÀüÀÏºñ</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -988,10 +988,10 @@ function fnShowOff(offId){
 	</table>
 	<div class="more_info">
 		<span>
-			<a href="#" onclick="clickcr(this, 'rch.5', '', '', event); return false;"><img src="https://ssl.pstatic.net/static/nfinance/btn_prev2.gif" width="17" height="15" alt="ì´ì „"></a>
-			<a href="#" onclick="clickcr(this, 'rch.6', '', '', event); return false;"><img src="https://ssl.pstatic.net/static/nfinance/btn_next2.gif" width="17" height="15" alt="ë‹¤ìŒ"></a>
+			<a href="#" onclick="clickcr(this, 'rch.5', '', '', event); return false;"><img src="https://ssl.pstatic.net/static/nfinance/btn_prev2.gif" width="17" height="15" alt="ÀÌÀü"></a>
+			<a href="#" onclick="clickcr(this, 'rch.6', '', '', event); return false;"><img src="https://ssl.pstatic.net/static/nfinance/btn_next2.gif" width="17" height="15" alt="´ÙÀ½"></a>
 		</span>
-		<a href="#" onclick="javascript:openMyitemNew('https://finance.naver.com'); clickcr(this, 'rch.7', '', '', event);" class="btn_more _mystock_more_info"><img src="https://ssl.pstatic.net/static/nfinance/btn_more5.gif" width="33" height="10" alt="ë”ë³´ê¸°"></a>
+		<a href="#" onclick="javascript:openMyitemNew('https://finance.naver.com'); clickcr(this, 'rch.7', '', '', event);" class="btn_more _mystock_more_info"><img src="https://ssl.pstatic.net/static/nfinance/btn_more5.gif" width="33" height="10" alt="´õº¸±â"></a>
 	</div>
 </div>
 
@@ -1015,7 +1015,7 @@ function fnShowOff(offId){
 		var order = parentElement.indexOf(currentElement) + 3;
 		parentElement.className("tab_search search"+ order);
 
-		// í˜ì´ì§•ì„ ìœ„í•´ì„œ orderê°’ì— ë”°ë¼ ìµœê·¼ì¡°íšŒì¸ì§€ mystockì¸ì§€ typeì„ ì €ì¥
+		// ÆäÀÌÂ¡À» À§ÇØ¼­ order°ª¿¡ µû¶ó ÃÖ±ÙÁ¶È¸ÀÎÁö mystockÀÎÁö typeÀ» ÀúÀå
 		if (order == 1) {
 			currentType = "recent";
 		} else {
@@ -1080,12 +1080,12 @@ function initWorld() {
 }
 
 function initsDefaultDayHtml() {
-	var nDiff = 14.481;
-	var sDiff = formatNumberForFinance("14.481", false);
+	var nDiff = 3.842;
+	var sDiff = formatNumberForFinance("3.842", false);
 	var sXymd = "20230824".substr(0, 4) + "." + "20230824".substr(4, 2) + "." + "20230824".substr(6, 2);
-	var sClos = formatNumberForFinance("3092.88", false);
+	var sClos = formatNumberForFinance("3082.24", false);
 	var sOpen = formatNumberForFinance("3085.91", false);
-	var sHigh = formatNumberForFinance("3094.62", false);
+	var sHigh = formatNumberForFinance("3106.18", false);
 	var sLow = formatNumberForFinance("3072.95", false);
 	
 	sDefaultDayPointClass = "";
@@ -1102,7 +1102,7 @@ function initsDefaultDayHtml() {
 
 jindo.$Fn(initWorld).attach(document, "domready");
 
-// ì¼ë³„ì‹œì„¸ í˜ì´ì§• ì´ë™
+// ÀÏº°½Ã¼¼ ÆäÀÌÂ¡ ÀÌµ¿
 function moveDayPaging(nPage, bRenewPaging, e) {
 	jindo.$Event(e).stop();
 	
@@ -1110,7 +1110,7 @@ function moveDayPaging(nPage, bRenewPaging, e) {
 		initsDefaultDayHtml();
 	}
 
-	// í˜„ì¬í˜ì´ì§€ì™€ ë‹¤ë¥¸ ë§í¬ë¥¼ ëˆŒë €ì„ ê²½ìš°ì—ë§Œ Ajaxë¡œ ë°ì´í„°ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+	// ÇöÀçÆäÀÌÁö¿Í ´Ù¸¥ ¸µÅ©¸¦ ´­·¶À» °æ¿ì¿¡¸¸ Ajax·Î µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿Â´Ù.
 	if (nCurDayPage == nPage) {
 		return ;
 	}
@@ -1121,7 +1121,7 @@ function moveDayPaging(nPage, bRenewPaging, e) {
 			var json = res.json();
 			var elTable = jindo.$("dayTable");
 				
-			// tr ì „ë¶€ ì‚­ì œ
+			// tr ÀüºÎ »èÁ¦
 			jindo.$A(jindo.$$("tr", elTable)).forEach(function (v, i) {
 				if (i > 0) {
 					jindo.$Element(elTable).remove(v);
@@ -1171,7 +1171,7 @@ function moveDayPaging(nPage, bRenewPaging, e) {
 		}
 	}).request();
 	
-	// ìƒˆë¡œ í˜ì´ì§•ì„ ì œì‘
+	// »õ·Î ÆäÀÌÂ¡À» Á¦ÀÛ
 	if (bRenewPaging) {
 		makePaging("dayPaging", "dayLink", moveDayPaging, nPage, nMaxDayPage);
 		nCurDayPage = nPage;
@@ -1183,11 +1183,11 @@ function moveDayPaging(nPage, bRenewPaging, e) {
 	}
 }
 
-// ì‹œê°„ë³„ ì‹œì„¸ í˜ì´ì§• ì´ë™
+// ½Ã°£º° ½Ã¼¼ ÆäÀÌÂ¡ ÀÌµ¿
 function moveTimePaging(nPage, bRenewPaging, e) {
 	jindo.$Event(e).stop();
 	
-	// í˜„ì¬í˜ì´ì§€ì™€ ë‹¤ë¥¸ ë§í¬ë¥¼ ëˆŒë €ì„ ê²½ìš°ì—ë§Œ Ajaxë¡œ ë°ì´í„°ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+	// ÇöÀçÆäÀÌÁö¿Í ´Ù¸¥ ¸µÅ©¸¦ ´­·¶À» °æ¿ì¿¡¸¸ Ajax·Î µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿Â´Ù.
 	if (nCurTimePage == nPage) {
 		return ;
 	}
@@ -1200,7 +1200,7 @@ function moveTimePaging(nPage, bRenewPaging, e) {
 			var sHtmlFormat = "<td class=\"tb_td11\">%s</td><td class=\"tb_td12\"><span>%s</span></td><td class=\"tb_td13\"><span class=\"point_status\">%s</span></td>"
 				+ "<td class=\"tb_td14\"><span class=\"point_status\">%s%</span></td><td class=\"tb_td15\"><span>%s</span></td>"
 			
-			// tr ì „ë¶€ ì‚­ì œ
+			// tr ÀüºÎ »èÁ¦
 			jindo.$A(jindo.$$("tr", elTable)).forEach(function (v, i) {
 				if (i > 0) {
 					jindo.$Element(elTable).remove(v);
@@ -1241,7 +1241,7 @@ function moveTimePaging(nPage, bRenewPaging, e) {
 		}
 	}).request();
 	
-	// ìƒˆë¡œ í˜ì´ì§•ì„ ì œì‘
+	// »õ·Î ÆäÀÌÂ¡À» Á¦ÀÛ
 	if (bRenewPaging) {
 		makePaging("timePaging", "timeLink", moveTimePaging, nPage, nMaxTimePage);
 		nCurTimePage = nPage;
@@ -1293,11 +1293,11 @@ function sortInclude(sOrdering, sDirection, sBtnId, e) {
 	
 }
 
-// í¸ì…ì§€ìˆ˜ í˜ì´ì§• ì´ë™
+// ÆíÀÔÁö¼ö ÆäÀÌÂ¡ ÀÌµ¿
 function moveIncludePaging(nPage, bRenewPaging, e) {
 	jindo.$Event(e).stop();
 	
-	// í˜„ì¬í˜ì´ì§€ì™€ ë‹¤ë¥¸ ë§í¬ë¥¼ ëˆŒë €ì„ ê²½ìš°ì—ë§Œ Ajaxë¡œ ë°ì´í„°ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+	// ÇöÀçÆäÀÌÁö¿Í ´Ù¸¥ ¸µÅ©¸¦ ´­·¶À» °æ¿ì¿¡¸¸ Ajax·Î µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿Â´Ù.
 	if (nCurIncludePage == nPage) {
 		return ;
 	}
@@ -1316,7 +1316,7 @@ function moveIncludePaging(nPage, bRenewPaging, e) {
 				+ "<td class=\"tb_td6\"><span>%s</span></td>";
 				
 				
-			// tr ì „ë¶€ ì‚­ì œ
+			// tr ÀüºÎ »èÁ¦
 			jindo.$A(jindo.$$("tr", elTable)).forEach(function (v, i) {
 				if (i > 0) {
 					jindo.$Element(elTable).remove(v);
@@ -1360,7 +1360,7 @@ function moveIncludePaging(nPage, bRenewPaging, e) {
 		}
 	}).request();
 	
-	// ìƒˆë¡œ í˜ì´ì§•ì„ ì œì‘
+	// »õ·Î ÆäÀÌÂ¡À» Á¦ÀÛ
 	if (bRenewPaging) {
 		makePaging("includePaging", "includeLink", moveIncludePaging, nPage, nMaxIncludePage);
 		nCurIncludePage = nPage;
@@ -1375,16 +1375,16 @@ function moveIncludePaging(nPage, bRenewPaging, e) {
 	}
 }
 	
-// í˜ì´ì§•ì„ ìƒˆë¡œ ìƒì„±í•´ì£¼ëŠ” ê³µí†µí•¨ìˆ˜
+// ÆäÀÌÂ¡À» »õ·Î »ı¼ºÇØÁÖ´Â °øÅëÇÔ¼ö
 function makePaging(pagingId, linkId, func, nPage, nMax) {
 	var welPaging = jindo.$Element(pagingId);
-	var sPrevFormat = "<img src=\"https://ssl.pstatic.net/static/nfinance/bu_pgarL.gif\" width=\"3\" height=\"5\" alt=\"ì´ì „\"> ì´ì „";
-	var sNextFormat = "ë‹¤ìŒ <img src=\"https://ssl.pstatic.net/static/nfinance/bu_pgarR.gif\" width=\"3\" height=\"5\" alt=\"ë‹¤ìŒ\">";
+	var sPrevFormat = "<img src=\"https://ssl.pstatic.net/static/nfinance/bu_pgarL.gif\" width=\"3\" height=\"5\" alt=\"ÀÌÀü\"> ÀÌÀü";
+	var sNextFormat = "´ÙÀ½ <img src=\"https://ssl.pstatic.net/static/nfinance/bu_pgarR.gif\" width=\"3\" height=\"5\" alt=\"´ÙÀ½\">";
 
-	// ì‚­ì œ í›„ ì‚½ì…
+	// »èÁ¦ ÈÄ »ğÀÔ
 	welPaging.html("");
 	
-	// ì´ì „
+	// ÀÌÀü
 	if (nPage > 10) {
 		var welPrev = jindo.$Element(jindo.$("<a></a>"));
 		
@@ -1403,7 +1403,7 @@ function makePaging(pagingId, linkId, func, nPage, nMax) {
 		welPaging.append(welPrev);
 	}
 	
-	// í˜ì´ì§€
+	// ÆäÀÌÁö
 	var nStart;
 	var nEnd;
 	
@@ -1435,7 +1435,7 @@ function makePaging(pagingId, linkId, func, nPage, nMax) {
 		welPaging.append(welPage);
 	}
 	
-	// ë‹¤ìŒ
+	// ´ÙÀ½
 	var bMakeNext = false;
 	if (nPage % 10 == 1) {
 		bMakeNext = nMax >= nPage + 10;
@@ -1462,7 +1462,7 @@ function makePaging(pagingId, linkId, func, nPage, nMax) {
 	}
 }
 
-// ì¼ë³„ì‹œì„¸ ë…¸ì¶œ
+// ÀÏº°½Ã¼¼ ³ëÃâ
 function showDayQuoteList() {
 	jindo.$Element(jindo.$$.getSingle("li.btn_day a")).addClass("on");
 	jindo.$Element(jindo.$$.getSingle("li.btn_time a")).removeClass("on");
@@ -1472,7 +1472,7 @@ function showDayQuoteList() {
 	jindo.$Element("timePaging").hide();
 }
 
-// ì‹œê°„ë³„ì‹œì„¸ ë…¸ì¶œ
+// ½Ã°£º°½Ã¼¼ ³ëÃâ
 function showTimeQuoteList() {
 	jindo.$Element(jindo.$$.getSingle("li.btn_day a")).removeClass("on");
 	jindo.$Element(jindo.$$.getSingle("li.btn_time a")).addClass("on");
@@ -1482,7 +1482,7 @@ function showTimeQuoteList() {
 	jindo.$Element("timePaging").show();
 }
 
-// ì„  ì°¨íŠ¸ ë…¸ì¶œ
+// ¼± Â÷Æ® ³ëÃâ
 function showChart(target) {
 	var directory = "";
 	
@@ -1498,7 +1498,7 @@ function showChart(target) {
 		if (jindo.$Element(v).className() == target) {
 			jindo.$Element(v).child()[0].addClass("on");
 			var welChart = jindo.$Element(jindo.$$.getSingle("div.flash_area img"));
-			welChart.attr("src", "https://ssl.pstatic.net/imgfinance/chart/world/" + directory + "/SHS@000001.png?1692851097602");
+			welChart.attr("src", "https://ssl.pstatic.net/imgfinance/chart/world/" + directory + "/SHS@000001.png?1692866481513");
 		} else {
 			jindo.$Element(v).child()[0].removeClass("on");
 		}
@@ -1510,13 +1510,13 @@ function showChart(target) {
 	
 }
 
-// ë´‰ ì°¨íŠ¸ ë…¸ì¶œ
+// ºÀ Â÷Æ® ³ëÃâ
 function showBarChart(target) {
 	jindo.$A(jindo.$$("dl.bar dd ul li")).forEach(function(v) {
 		if (jindo.$Element(v).className() == target) {
 			jindo.$Element(v).child()[0].addClass("on");
 			var welChart = jindo.$Element(jindo.$$.getSingle("div.flash_area img"));
-			welChart.attr("src", "https://ssl.pstatic.net/imgfinance/chart/world/candle/" + target + "/SHS@000001.png?1692851097602");
+			welChart.attr("src", "https://ssl.pstatic.net/imgfinance/chart/world/candle/" + target + "/SHS@000001.png?1692866481513");
 		} else {
 			jindo.$Element(v).child()[0].removeClass("on");
 		}
@@ -1531,38 +1531,38 @@ function showBarChart(target) {
 	<div id="footer">
 	<ul>
 		<li class="first">
-			<a href="https://new-m.pay.naver.com/member/terms-policy/naver-financial-service" onClick="clickcr(this, 'fot.service', '', '', event);" target="_blank">ì´ìš©ì•½ê´€</a>
+			<a href="https://new-m.pay.naver.com/member/terms-policy/naver-financial-service" onClick="clickcr(this, 'fot.service', '', '', event);" target="_blank">ÀÌ¿ë¾à°ü</a>
 		</li>
 		<li>
-			<a href="https://new-m.pay.naver.com/member/terms-policy/privacy" onClick="clickcr(this, 'fot.privacy', '', '', event);" target="_blank"><strong>ê°œì¸ì •ë³´ì²˜ë¦¬ë°©ì¹¨</strong></a>
+			<a href="https://new-m.pay.naver.com/member/terms-policy/privacy" onClick="clickcr(this, 'fot.privacy', '', '', event);" target="_blank"><strong>°³ÀÎÁ¤º¸Ã³¸®¹æÄ§</strong></a>
 		</li>
 		<li>
-			<a href="/rules.naver" onClick="clickcr(this, 'fot.policy', '', '', event);" target="_blank">ê²Œì‹œíŒ ìš´ì˜ì›ì¹™</a>
+			<a href="/rules.naver" onClick="clickcr(this, 'fot.policy', '', '', event);" target="_blank">°Ô½ÃÆÇ ¿î¿µ¿øÄ¢</a>
 		</li>
 		<li>
-			<a href="https://help.naver.com/service/5617/category/bookmark?lang=ko" onClick="clickcr(this, 'fot.help', '', '', event);" target="_blank">ì¦ê¶Œ ê³ ê°ì„¼í„°</a>
+			<a href="https://help.naver.com/service/5617/category/bookmark?lang=ko" onClick="clickcr(this, 'fot.help', '', '', event);" target="_blank">Áõ±Ç °í°´¼¾ÅÍ</a>
 		</li>
 	</ul>
 	<p class="desc">
-		ë„¤ì´ë²„íŒŒì´ë‚¸ì…œ(ì£¼)ì´ ì œê³µí•˜ëŠ” ê¸ˆìœµ ì •ë³´ëŠ” <a href="javascript:;" onclick="togglePanelFooter('footerPanel0');" class="desc_help">ì½˜í…ì¸  ì œê³µì—…ì²´</a>ë¡œë¶€í„° ë°›ëŠ” íˆ¬ì ì°¸ê³ ì‚¬í•­ì´ë©°, ì˜¤ë¥˜ê°€ ë°œìƒí•˜ê±°ë‚˜ ì§€ì—°ë  ìˆ˜ ìˆìŠµë‹ˆë‹¤.<br/>
-		ë„¤ì´ë²„íŒŒì´ë‚¸ì…œ(ì£¼)ê³¼ ì½˜í…ì¸  ì œê³µì—…ì²´ëŠ” ì œê³µëœ ì •ë³´ì— ì˜í•œ íˆ¬ì ê²°ê³¼ì— ë²•ì ì¸ ì±…ì„ì„ ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤. ê²Œì‹œëœ ì •ë³´ëŠ” ë¬´ë‹¨ìœ¼ë¡œ ë°°í¬í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
+		³×ÀÌ¹öÆÄÀÌ³½¼È(ÁÖ)ÀÌ Á¦°øÇÏ´Â ±İÀ¶ Á¤º¸´Â <a href="javascript:;" onclick="togglePanelFooter('footerPanel0');" class="desc_help">ÄÜÅÙÃ÷ Á¦°ø¾÷Ã¼</a>·ÎºÎÅÍ ¹Ş´Â ÅõÀÚ Âü°í»çÇ×ÀÌ¸ç, ¿À·ù°¡ ¹ß»ıÇÏ°Å³ª Áö¿¬µÉ ¼ö ÀÖ½À´Ï´Ù.<br/>
+		³×ÀÌ¹öÆÄÀÌ³½¼È(ÁÖ)°ú ÄÜÅÙÃ÷ Á¦°ø¾÷Ã¼´Â Á¦°øµÈ Á¤º¸¿¡ ÀÇÇÑ ÅõÀÚ °á°ú¿¡ ¹ıÀûÀÎ Ã¥ÀÓÀ» ÁöÁö ¾Ê½À´Ï´Ù. °Ô½ÃµÈ Á¤º¸´Â ¹«´ÜÀ¸·Î ¹èÆ÷ÇÒ ¼ö ¾ø½À´Ï´Ù.
 	</p>
 	<div id="footerPanel0" class="provider_layer" style="display:none" tabindex="0" onblur="hidePannel('footerPanel0')">
-		<strong class="provider_layer__tit">ë„¤ì´ë²„íŒŒì´ë‚¸ì…œì— ì½˜í…ì¸  ì œê³µ</strong>
+		<strong class="provider_layer__tit">³×ÀÌ¹öÆÄÀÌ³½¼È¿¡ ÄÜÅÙÃ÷ Á¦°ø</strong>
 		<div class="provider_layer__txt">
-			<strong>ì—í”„ì•¤ê°€ì´ë“œ</strong> ê¸°ì—… ë° ì¬ë¬´ì •ë³´<br>
-			<strong>KGì œë¡œì¸</strong> í•´ì™¸ ì‹œì„¸, ì‹œì¥ì§€í‘œ ì •ë³´<br>
-			<strong>í•œêµ­ì˜ˆíƒê²°ì œì›</strong> ì£¼ì£¼ì´íšŒì¼, ì „ìíˆ¬í‘œ ì •ë³´<br>
-			<strong>ì¸í¬ìŠ¤íƒ</strong> êµ­ë‚´ í…Œë§ˆ ì •ë³´
+			<strong>¿¡ÇÁ¾Ø°¡ÀÌµå</strong> ±â¾÷ ¹× Àç¹«Á¤º¸<br>
+			<strong>KGÁ¦·ÎÀÎ</strong> ÇØ¿Ü ½Ã¼¼, ½ÃÀåÁöÇ¥ Á¤º¸<br>
+			<strong>ÇÑ±¹¿¹Å¹°áÁ¦¿ø</strong> ÁÖÁÖÃÑÈ¸ÀÏ, ÀüÀÚÅõÇ¥ Á¤º¸<br>
+			<strong>ÀÎÆ÷½ºÅ¹</strong> ±¹³» Å×¸¶ Á¤º¸
 		</div>
 		<div class="provider_layer__info">
-			<strong class="provider_layer__tit">ë„¤ì´ë²„ì— ì½˜í…ì¸  ì œê³µ</strong>
+			<strong class="provider_layer__tit">³×ÀÌ¹ö¿¡ ÄÜÅÙÃ÷ Á¦°ø</strong>
 			<div class="provider_layer__txt">
-				<strong>ì½”ìŠ¤ì½¤</strong> êµ­ë‚´ ì‹œì„¸ ì •ë³´
+				<strong>ÄÚ½ºÄŞ</strong> ±¹³» ½Ã¼¼ Á¤º¸
 			</div>
 		</div>
 		<button type="button" class="button_close" onclick="hidePannel('footerPanel0')">
-			<img src="https://ssl.pstatic.net/static/nfinance/2022/footer_close.png" width="20" height="20" alt="ë‹«ê¸°">
+			<img src="https://ssl.pstatic.net/static/nfinance/2022/footer_close.png" width="20" height="20" alt="´İ±â">
 		</button>
 	</div>
 	<address>
