@@ -7,25 +7,24 @@ namespace App\DailyReportCrawler;
  */
 
 class StockPriceDto {
+    public string $gbn;
     public int $stockCategoryId;
     public string $categoryName;
+    public int $stockDate;
     public int $stockId;
     public string $stockName;
-    public ?float $d0Value;
-    public ?float $d1Diff;
-    public ?float $d5Diff;
-    public ?float $d20Diff;
+    public float $stockValue;
     public ?string $remarks;
 
-    public function __construct($stockCategoryId, $categoryName, $stockId, $stockName, $d0Value, $d1Diff, $d5Diff, $d20Diff, $remarks) {
+
+    public function __construct($gbn, $stockCategoryId, $categoryName, $stockDate, $stockId, $stockName, $stockValue, $remarks) {
+        $this->gbn = $gbn;
         $this->stockCategoryId = $stockCategoryId;
         $this->categoryName = $categoryName;
+        $this->stockDate = $stockDate;
         $this->stockId = $stockId;
         $this->stockName = $stockName;
-        $this->d0Value = $d0Value;
-        $this->d1Diff = $d1Diff;
-        $this->d5Diff = $d5Diff;
-        $this->d20Diff = $d20Diff;
+        $this->stockValue = $stockValue;
         $this->remarks = $remarks;
     }
 }
