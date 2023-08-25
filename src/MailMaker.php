@@ -10,50 +10,12 @@ class MailMaker {
     /**
      * 메일 바디를 만드는 메서드
      * todo : 템플릿과 메일 만드는 클래스를 분리하기
-     * @param DateTime $targetDate 
+     * @param DateTime $targetStockDate 
      * @param array $stockCountByCategoryArr 
      * @param array $stockPriceDtoArr 
      * @return string 
      */
-    function mailMake($stockCountByCategoryArr, $stockPriceDtoArr) {
-
-        // mailMaker에서 사용하기 편한 형태로 정제
-        $cleanedStockPriceArr = [];
-
-        // stock_id를 key로 하고 GBN별 종가 지수와 기타 정보들 담기
-        foreach ($stockPriceDtoArr as $dto) {
-            // 공통
-            // ??= : 해당 Key에 값이 비어있을 경우에만 값을 할당함
-            $cleanedStockPriceArr[$dto->stockId]['stockCategoryId'] ??= $dto->stockCategoryId;
-            $cleanedStockPriceArr[$dto->stockId]['categoryName'] ??= $dto->categoryName;
-            $cleanedStockPriceArr[$dto->stockId]['stockName'] ??= $dto->stockName;
-            $cleanedStockPriceArr[$dto->stockId]['remarks'] ??= $dto->remarks;
-
-            // D-0 (기준 종가)
-            if ($dto->gbn == 'D0') {
-                $cleanedStockPriceArr[$dto->stockId]['d0Value'] = $dto->stockValue;
-                $cleanedStockPriceArr[$dto->stockId]['d0StockDate'] = $dto->stockDate;
-                
-            // D-1
-            } else if ($dto->gbn == 'D1') {
-            $cleanedStockPriceArr[$dto->stockId]['d1Value'] = $dto->stockValue;
-            $cleanedStockPriceArr[$dto->stockId]['d1StockDate'] = $dto->stockDate;
-            
-            // D-5
-            } else if ($dto->gbn == 'D5') {
-            $cleanedStockPriceArr[$dto->stockId]['d5Value'] = $dto->stockValue;
-            $cleanedStockPriceArr[$dto->stockId]['d5StockDate'] = $dto->stockDate;
-            
-            // D-20
-            } else if ($dto->gbn == 'D20') {
-                $cleanedStockPriceArr[$dto->stockId]['d20Value'] = $dto->stockValue;
-                $cleanedStockPriceArr[$dto->stockId]['d20StockDate'] = $dto->stockDate;
-            }
-
-        }
-
-        var_dump($cleanedStockPriceArr);
-        exit;
+    function mailMake($stockCountByCategoryArr, $cleanedStockPriceArr, $targetStockDate) {
 
         // 문서에 필요한 날짜 변수
         $todayFormat = Date('Y-m-d');
@@ -87,7 +49,7 @@ class MailMaker {
             <div style=\"display: flex; justify-content: space-between;\">
                 <h4 style=\"{$fonts} margin-bottom: 4px;\">[주요지수 변동현황]</h4>
                 <h4 style=\"{$fonts} margin-bottom: 4px;\">
-                    (08월 22일 종가 기준)
+                    {$targetStockDate->format('(m월 d일 종가 기준)')}
                 </h4>
             </div>
 
@@ -108,10 +70,10 @@ class MailMaker {
         // 현재 카테고리에서 몇 번째 행인지
         $currentCount = 1;
         
-        foreach ($stockPriceDtoArr as $dto) {
+        foreach ($cleanedStockPriceArr as $data) {
 
             // 현재 카테고리에 해당하는 stock 개수
-            $stockCount = $stockCountByCategoryArr[$dto->stockCategoryId];
+            $stockCount = $stockCountByCategoryArr[$data['stockCategoryId']];
 
             // 현재 카테고리의 마지막 행이라면 tr에 스타일 적용
             if ($currentCount == $stockCount) {
@@ -123,55 +85,23 @@ class MailMaker {
             
             // 해당 카테고리의 첫 행이라면 th 추가
             if ($currentCount == 1) {
-                $mailBody .= "<th rowspan=\"{$stockCount}\" style=\"{$fonts} font-size: 14px;\">{$dto->categoryName}</th>";
+                $mailBody .= "<th rowspan=\"{$stockCount}\" style=\"{$fonts} font-size: 14px;\">{$data['categoryName']}</th>";
             }
 
-            $mailBody .= "<td style=\"{$fonts} {$table_td}\">{$dto->stockName}</td>";
-            $mailBody .= "<td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($dto->d0Value, false, $dto->categoryName) . "</td>";
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\">{$data['stockName']}</td>";
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\"> " . $this->valueFormat($data['d0Value'], false, $data['categoryName']) . "</td>";
 
-            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d1Diff) . "\"> " 
-                            . $this->valueFormat($dto->d1Diff, true) . "</td>";
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($data['d0Value'] - $data['d1Value']) . "\"> " 
+                            . $this->valueFormat($data['d0Value'] - $data['d1Value'], true) . "</td>";
 
-            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d5Diff) . "\"> " 
-                            . $this->valueFormat($dto->d5Diff, true) . "</td>";
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($data['d0Value'] - $data['d5Value']) . "\"> " 
+                            . $this->valueFormat($data['d0Value'] - $data['d5Value'], true) . "</td>";
         
-            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($dto->d20Diff) . "\"> " 
-                            . $this->valueFormat($dto->d20Diff, true) . "</td>";
+            $mailBody .= "<td style=\"{$fonts} {$value_td} " . $this->changeStyleByUpDown($data['d0Value'] - $data['d20Value']) . "\"> " 
+                            . $this->valueFormat($data['d0Value'] - $data['d20Value'], true) . "</td>";
 
-            $mailBody .= "<td style=\"{$fonts} {$table_td}\">$dto->remarks";
+            $mailBody .= "<td style=\"{$fonts} {$table_td}\">" . $data['remarks'];
 
-
-            // 같은 날짜에 해당 항목에만 데이터가 없는 경우 비고 란에 내용 추가
-            // 기준 종가가 없다면 모든 데이터가 null이므로 기준일 휴장만 기입
-            if ($dto->d0Value === null) {
-                // 기본 비고가 있는 경우에만 줄바꿈 후 휴장 표시
-                if ($dto->remarks != "") {
-                    $mailBody .= "<br>";
-                }
-                $mailBody .= "<span style=\"color: gray; font-size: 12px\">기준일 휴장</span>";
-            } else {
-                if ($dto->remarks === null) {
-                    $mailBody .= "<br>";
-                }
-                // 여러 일자에 휴장인 경우도 있을 수 있으므로 else if를 쓰지 않음
-                if ($dto->d1Diff === null) {
-                    $mailBody .= "<span style=\"color: gray\">D-1 휴장</span>";
-                }
-                if ($dto->d5Diff === null) {
-                    // 앞에 휴장 글자가 있다면 줄바꿈
-                    if (substr($mailBody, -mb_strlen("휴장</span>") === "휴장</span>")) {
-                        $mailBody .= "<br>";
-                    }
-                    $mailBody .= "<span style=\"color: gray\">D-5 휴장</span>";
-                }
-                if ($dto->d20Diff === null) {
-                    // 앞에 휴장 글자가 있다면 줄바꿈
-                    if (substr($mailBody, -mb_strlen("휴장</span>") === "휴장</span>")) {
-                        $mailBody .= "<br>";
-                    }
-                    $mailBody .= "<span style=\"color: gray\">D-20 휴장</span>";
-                }
-            }
             $mailBody .= "</td>";
             $mailBody .= "</tr>";
             
