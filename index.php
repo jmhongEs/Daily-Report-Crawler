@@ -19,49 +19,72 @@ const STATUS_SUCCESS = 2;
 // $crawlData->crawldata();
 
 // 데이터 모으기
-$floatResultArray= $crawlData->forCheckPath();
+//$floatResultArray= $crawlData->forCheckPath();
 
 
 // DB에 삽입
-$dbConnect->dataInsert($floatResultArray);
+//$dbConnect->dataInsert($floatResultArray);
 
 // 데이터 HTML 문서에 삽입 
-
-// 기준 날짜 (오늘날짜 - 1)
-// 만약 해당 날짜가 토/일이라면 그 이전 평일을 찾아야 함
-// TODO : 휴일 체크는 나중에 API 받아서 활용
-
-// 현재 스크래핑 방식 변경 중이라 20230823 데이터가 없어서 임의의 날짜로 테스트중 
-$today = new DateTime('2023-08-23');
-// $today = new DateTime();
-
-$targetDate = $today->modify('-1 day');
-
-// 일요일이라면
-if ($targetDate->format('w') == 0) {
-    $targetDate = $targetDate->modify('-2 day');
-    // 토요일이라면
-} else if ($targetDate->format('w') == 6) {
-    $targetDate = $targetDate->modify('-1 day');
-}
-
-$targetDateInt = intval($targetDate->format('Ymd'));
 
 // $targetDate에 이미 메일 발송 성공한 로그가 남아있다면 아래 코드를 실행하지 않음
 // TODO : SELECT 추가
 
-// GBN : D0, D1, D5, D20 구분
-// 지수별 종가 데이터
-$stockPriceDtoArr = $dbConnect->selectStockPrice();
 
 // 카테고리의 첫 행, 마지막 행임을 알아야 함
 // 카테고리별 stock 개수
 $stockCountByCategoryArr = $dbConnect->selectStockCountByCategory();
 
-$mailBody = $mailMaker->mailMake($stockCountByCategoryArr, $stockPriceDtoArr);
+// GBN : D0, D1, D5, D20 구분
+// 지수별 종가 데이터
+$stockPriceDtoArr = $dbConnect->selectStockPrice();
+
+
+// mailMaker에서 사용하기 편한 형태로 정제
+// 정제를 index에서 하는 이유는 종가기준일을 아래 배열의 KOSPI에 담겨 있는 d0StockDate로 하기 위함
+$cleanedStockPriceArr = [];
+
+// stock_id를 key로 하고 GBN별 종가 지수와 기타 정보들 담기
+foreach ($stockPriceDtoArr as $dto) {
+    // 공통
+    // ??= : 해당 Key에 값이 비어있을 경우에만 값을 할당함
+    $cleanedStockPriceArr[$dto->stockId]['stockCategoryId'] ??= $dto->stockCategoryId;
+    $cleanedStockPriceArr[$dto->stockId]['categoryName'] ??= $dto->categoryName;
+    $cleanedStockPriceArr[$dto->stockId]['stockName'] ??= $dto->stockName;
+    $cleanedStockPriceArr[$dto->stockId]['remarks'] ??= $dto->remarks;
+
+    // D-0 (기준 종가)
+    if ($dto->gbn == 'D0') {
+        $cleanedStockPriceArr[$dto->stockId]['d0Value'] = $dto->stockValue;
+        $cleanedStockPriceArr[$dto->stockId]['d0StockDate'] = $dto->stockDate;
+        
+    // D-1
+    } else if ($dto->gbn == 'D1') {
+    $cleanedStockPriceArr[$dto->stockId]['d1Value'] = $dto->stockValue;
+    $cleanedStockPriceArr[$dto->stockId]['d1StockDate'] = $dto->stockDate;
+    
+    // D-5
+    } else if ($dto->gbn == 'D5') {
+    $cleanedStockPriceArr[$dto->stockId]['d5Value'] = $dto->stockValue;
+    $cleanedStockPriceArr[$dto->stockId]['d5StockDate'] = $dto->stockDate;
+    
+    // D-20
+    } else if ($dto->gbn == 'D20') {
+        $cleanedStockPriceArr[$dto->stockId]['d20Value'] = $dto->stockValue;
+        $cleanedStockPriceArr[$dto->stockId]['d20StockDate'] = $dto->stockDate;
+    }
+}
+
+// key 이름에 따라 정렬
+ksort($cleanedStockPriceArr);
+
+// 종가 기준일 (숫자 -> 로그 남길 때 사용, 날짜 -> html 작성 시 사용)
+$targetStockDateInt = $cleanedStockPriceArr[1]['d0StockDate'];
+$targetStockDate = DateTime::createFromFormat('Ymd', $targetStockDateInt);
+
+$mailBody = $mailMaker->mailMake($stockCountByCategoryArr, $cleanedStockPriceArr, $targetStockDate);
 echo $mailBody;
 
-exit;
 
 // 개발용, 운영용에 따라 주석 풀기
 $emails = explode(';', $_ENV['REPORT_RECIPIENT_EMAIL_DEV']);
@@ -88,12 +111,12 @@ if ($sendResult) {
     
     // email_log 테이블에 로그 저장하기
     // status 값(1, 2)은 상수로 선언해서 사용함
-    $dbConnect->insertEmailLog($targetDateInt, STATUS_SUCCESS);
+    $dbConnect->insertEmailLog($targetStockDateInt, STATUS_SUCCESS);
     
     // 실패 시 실패 로그를 남김 
 } else {
     // email_log 테이블에 로그 저장하기
-    $dbConnect->insertEmailLog($targetDateInt, STATUS_FAIL);
+    $dbConnect->insertEmailLog($targetStockDateInt, STATUS_FAIL);
     
 }
 
