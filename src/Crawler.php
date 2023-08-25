@@ -6,21 +6,24 @@ use DOMDocument;
 use DOMXPath;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use GuzzleHttp\Client;
+use App\DailyReportCrawler\Mailer;
 
 class Crawler
 {
 
     public CssSelectorConverter $converter;
     public Client $client;
+    public Mailer $mailer;
 
     // 생성자에서 CssSelectorConverter 객체도 함께 생성되어 멤버변수로 저장됨
     function __construct()
     {
         $this->converter = new CssSelectorConverter();
         $this->client = new Client();
+        $this->mailer = new Mailer();
     }
 
-    function saveHtml($url)
+    function curlGetHtml($url)
     {
 
         $ch = curl_init();
@@ -42,9 +45,12 @@ class Crawler
 
         if ($html === false) {
             $error = curl_error($ch); // 오류 메시지 가져오기
-            echo "CURL Error: " . $error;
+            $this->mailer->errorOccurredEmail($error);
+            exit;
         } elseif ($status_code !== 200) {
-            echo "HTTP Error: " . $status_code;
+            $error = "HTTP Error: " . $status_code;
+            $this->mailer->errorOccurredEmail($error);
+            exit;
         } else {
             // 성공적으로 데이터를 가져온 경우
             return $html;
@@ -59,7 +65,7 @@ class Crawler
 
     // HTML 문서 가져오는 함수
     // 가급적 composer를 활용해서 HTTP 패키지를 사용할 것
-    function getHtml($url): string
+    public function getHtml($url): string
     {
 
         // todo : 잘못된 url 입력 시 예외 처리
@@ -76,7 +82,15 @@ class Crawler
         $html = file_get_contents($url, false, $context);
 
         // 인코딩 변환 : EUC-KR을 UTF-8로
-        $html = iconv("EUC-KR", "UTF-8", $html);
+        if ($html === false) {
+            $error = error_get_last()['message'];
+            $this->mailer->errorOccurredEmail($error);
+            exit;
+        } else {
+            // 가져온 데이터의 처리
+            $html = iconv("EUC-KR", "UTF-8", $html);
+            return $html;
+        }
 
         //$html 앞 부분에 <script></script> 부분이 붙어 있을 때 에러가 발생하는 경우가 있어서 <html 부분부터 잘라냄
         // $html = '<html' . explode("<html", $html)[1];
@@ -86,10 +100,9 @@ class Crawler
         //     $html = '<!DOCTYPE html>' . $html;
         // }
 
-        return $html;
     }
 
-    function checkPath($url, $cssPath)
+    public function checkPath($url, $cssPath)
     {
         $html = $this->getHtml($url);
 
@@ -120,30 +133,7 @@ class Crawler
         return $selectedValues;
     }
 
-    // 이전것
-    function findElementsBySelector($url, $cssSelector)
-    {
-
-        $html = $this->getHtml($url);
-
-        // 변환된 CSS 선택자 사용
-        $xpathSelector = $this->converter->toXPath($cssSelector);
-
-        $dom = new DOMDocument();
-        // 에러 무시 
-        libxml_use_internal_errors(true);
-        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        libxml_clear_errors();
-
-        $xpath = new DOMXPath($dom);
-
-        // 변환된 XPath 선택자를 사용하여 요소 선택
-        $selectedElements = $xpath->query($xpathSelector);
-
-        return $selectedElements;
-    }
-
-    function getPost($postUrl, $postBodyData)
+    public function getPost($postUrl, $postBodyData)
     {
         try {
             // Guzzle을 사용해서 POST 요청 보내기
@@ -155,23 +145,22 @@ class Crawler
             ]);
 
             if ($response->getStatusCode() !== 200) {
-                // HTTP 에러 처리
-                $errorMessage = "HTTP Error: " . $response->getStatusCode();
-                // 예를 들어, 에러를 띄우거나 로그에 기록하는 등의 처리를 할 수 있습니다.
-                echo $errorMessage;
-                return ''; // 에러 발생 시 빈 문자열 반환
+                $error = $response->getStatusCode();
+                $this->mailer->errorOccurredEmail($error);
+                exit;
             } else {
                 // 200인 경우에만 postHtml에 저장하고 반환
                 $postHtml = $response->getBody()->getContents();
                 return $postHtml;
             }
         } catch (\Exception $e) {
-            echo 'Error: ' . $e->getMessage();
-            return '';
+            $error = $e;
+            $this->mailer->errorOccurredEmail($error);
+            exit;
         }
     }
 
-    function extractData($postHtml): array
+    public function extractData($postHtml): array
     {
         $responseArray = json_decode($postHtml, true);
         // echo '<hr>';
@@ -209,16 +198,17 @@ class Crawler
 
             return $extractedData;
         } else {
-            echo '올바른 데이터를 불러오지 못 했습니다.';
-            exit();
+            $error = 'Json requert ( 국고채, CD 91일 )에서 올바른 데이터를 불러오지 못 했습니다.';
+            $this->mailer->errorOccurredEmail($error);
+            exit;
         }
     }
 
 
 
-    function checkPathCurl($url, $cssPath)
+    public function checkPathCurl($url, $cssPath)
     {
-        $html = $this->saveHtml($url);
+        $html = $this->curlGetHtml($url);
 
         $html = str_replace(array("\t", "\n"), '', $html);
 

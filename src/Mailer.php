@@ -65,4 +65,37 @@ class Mailer extends PHPMailer
         }
     }
 
+    public function errorOccurredEmail(string $error) {
+        try {
+            $emails = explode(';', $_ENV['REPORT_RECIPIENT_EMAIL_DEV']);
+            // $this->addCC('cc@example.com'); // CC : 참조
+
+            // todo : 개발 끝나면 팀장님, 이사님, 함이레 매니저님 참조
+            // $this->addBCC(explode(';', $_ENV['REPORT_BCC_EMAIL'])); // BCC : 숨은 참조
+
+            // 한 번에 여러 명에게 발송
+            foreach ($emails as $toEmail) {
+                $this->addAddress($toEmail);    
+            }
+
+            $this->isHTML(true);                                 
+            $this->Subject = 'DailyReport 데이터 수집 오류 발생 :'; 
+            $this->Body    = '다음과 같은 오류가 발생했습니다 -> ' . $error;
+            $this->AltBody = '';
+
+            $this->send();
+
+            // 메일 발송 성공 시 html 문서로 저장하기 위해 bool 값 반환
+            return true;
+
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$this->ErrorInfo}";
+            
+            return false;
+        } finally {
+            $this->clearAddresses();
+            $this->clearAttachments();
+        }
+    }
+
 }
