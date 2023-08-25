@@ -14,23 +14,15 @@ $dbConnect = new DBConnect();
 const STATUS_FAIL = 1;
 const STATUS_SUCCESS = 2;
 
-//$crawlData->forCheckPath();
-
-// $crawlData->crawldata();
-
 // 데이터 모으기
-//$floatResultArray= $crawlData->forCheckPath();
-
+$floatResultArray= $crawlData->forCheckPath();
 
 // DB에 삽입
-//$dbConnect->dataInsert($floatResultArray);
+$dbConnect->dataInsert($floatResultArray);
 
 // 데이터 HTML 문서에 삽입 
-
 // $targetDate에 이미 메일 발송 성공한 로그가 남아있다면 아래 코드를 실행하지 않음
 // TODO : SELECT 추가
-
-
 // 카테고리의 첫 행, 마지막 행임을 알아야 함
 // 카테고리별 stock 개수
 $stockCountByCategoryArr = $dbConnect->selectStockCountByCategory();

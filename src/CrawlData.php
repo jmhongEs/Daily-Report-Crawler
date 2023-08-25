@@ -143,10 +143,3 @@ class CrawlData
         return $crawlDataArray;
     }
 }
-// // $postHtml = $this->postCrawler->getPostHTML("https://ecos.bok.or.kr/serviceEndpoint/httpService/request.json", $postBodyData);
-        // $extractedData = $this->postCrawler->extractData($postHtml);
-        //$this->postCrawler->showResult($extractedData);
-        // foreach ($extractedData as $extracted){
-        //     $extractedValues = array_values($extracted);
-        //     $resultArray[] = $extractedValues[1];
-        // };
