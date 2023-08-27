@@ -118,7 +118,8 @@ class DBConnect
         // 가장 최근 종가기준일보다 작은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-1 종가 
         // 기준 종가일에서 -5한 날짜보다 작거나 같은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-5 종가
         // 기준 종가일에서 -20한 날짜보다 작거나 같은 stock_date 중에 가장 최근의 종가기준일을 가져옴 => D-20 종가
-
+        // CAST(DATE_FORMAT(NOW(), '%Y%m%d') AS UNSIGNED) : 현재 날짜를 정수 형태로
+        // 오늘 날짜의 데이터가 INSERT되어 있을 경우를 대비해서 오늘 날짜의 데이터는 조회 대상에서 제외함
 
         $query = "
                 SELECT GBN, STOCK_DATE, AA.STOCK_ID, AA.STOCK_VALUE, s.STOCK_NAME, s.REMARKS, c.STOCK_CATEGORY_ID, c.CATEGORY_NAME
@@ -127,7 +128,7 @@ class DBConnect
                       JOIN ( 
                             SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
                             FROM stock_price 
-                            WHERE DBSTATUS = 'A'
+                            WHERE DBSTATUS = 'A' AND STOCK_DATE < CAST(DATE_FORMAT(NOW(), '%Y%m%d') AS UNSIGNED) 
                             GROUP BY stock_id
                       ) B 
                       ON (A.STOCK_ID = B.STOCK_ID and A.STOCK_DATE = B.MX_STOCK_DATE)
@@ -142,7 +143,7 @@ class DBConnect
                             FROM stock_price 
                             WHERE STOCK_DATE < (SELECT max(STOCK_DATE) 
                                                 FROM stock_price 
-                                                WHERE DBSTATUS = 'A')
+                                                WHERE DBSTATUS = 'A' AND STOCK_DATE < CAST(DATE_FORMAT(NOW(), '%Y%m%d') AS UNSIGNED))
                                   AND DBSTATUS = 'A' 
                             GROUP BY STOCK_ID            
                       ) B 
@@ -157,7 +158,8 @@ class DBConnect
                             SELECT STOCK_ID, max(STOCK_DATE) MX_STOCK_DATE 
                             FROM stock_price 
                             WHERE STOCK_DATE <= (SELECT distinct STOCK_DATE 
-                                                 FROM stock_price 
+                                                 FROM stock_price
+                                                 WHERE DBSTATUS = 'A' AND STOCK_DATE < CAST(DATE_FORMAT(NOW(), '%Y%m%d') AS UNSIGNED) 
                                                  ORDER BY STOCK_DATE DESC 
                                                  LIMIT 1 OFFSET 5)
                             AND DBSTATUS = 'A'
@@ -175,6 +177,7 @@ class DBConnect
                             FROM stock_price 
                             WHERE STOCK_DATE <= (SELECT distinct STOCK_DATE 
                                                  FROM stock_price
+                                                 WHERE DBSTATUS = 'A' AND STOCK_DATE < CAST(DATE_FORMAT(NOW(), '%Y%m%d') AS UNSIGNED) 
                                                  ORDER BY STOCK_DATE DESC 
                                                  LIMIT 1 OFFSET 20)
                             AND DBSTATUS = 'A'
